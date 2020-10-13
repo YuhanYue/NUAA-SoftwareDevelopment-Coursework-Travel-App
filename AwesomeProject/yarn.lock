@@ -5767,10 +5767,9 @@ react-native-cardview-wayne@^1.0.7:
   dependencies:
     prop-types "^15.7.2"
 
-react-native-deprecated-custom-components@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.npm.taobao.org/react-native-deprecated-custom-components/download/react-native-deprecated-custom-components-0.1.2.tgz#ba10d40942bd90e1a98f989fd2809ea2466d413f"
-  integrity sha1-uhDUCUK9kOGpj5if0oCeokZtQT8=
+"react-native-deprecated-custom-components@git+https://github.com/facebookarchive/react-native-custom-components.git":
+  version "0.1.1"
+  resolved "git+https://github.com/facebookarchive/react-native-custom-components.git#d5201e53221a2460b096ee82ff4480f3b0de7fe4"
   dependencies:
     create-react-class "15.6.0"
     fbjs "~0.8.9"

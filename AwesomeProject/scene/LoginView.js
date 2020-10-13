@@ -4,6 +4,7 @@ import { Button, Text, View, Image, StyleSheet, TouchableOpacity, ToastAndroid, 
 
 import HomeScene from './HomeScene'
 import SignUpView from './SignUpView'
+import TabBar from "./TabBar";
 
 
 export default class LoginView extends Component{
@@ -22,7 +23,7 @@ export default class LoginView extends Component{
   login = () => {
     if (this.username == 'admin' && this.password == '123') {
       this.props.navigator.replace({
-        scene: HomeScene,
+        scene: TabBar,
       })
       ToastAndroid.show('登录成功',ToastAndroid.SHORT);
     } else {

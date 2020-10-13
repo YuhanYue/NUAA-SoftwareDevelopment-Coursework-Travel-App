@@ -1,12 +1,22 @@
 import React from "react";
 import styled from "styled-components";
+import HomeScene from './HomeScene'
+import LoginView from "./SignUpView";
+
 
 class Message extends React.Component {
+    login = () => {
+        this.props.navigator.replace({
+          scene: LoginView,
+        })
+  
+    };
+  
     render() {
         return (
             <Container>
                 <Cover>
-                    <Image source={this.props.image} />
+                    <Image source={this.props.image} onPress = {this.login}/>
                     <Title>{this.props.title}</Title>
                     <Author>by {this.props.author}</Author>
                 </Cover>
@@ -34,6 +44,8 @@ const Cover = styled.View`
 const Image = styled.Image`
     width: 100%;
     height: 290px;
+    //onPress={this.login}
+
 `;
 const Title = styled.Text`
     position: absolute;
