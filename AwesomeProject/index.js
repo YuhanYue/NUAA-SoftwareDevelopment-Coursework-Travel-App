@@ -1,6 +1,7 @@
 import React, { Component } from 'react';  
 import {  
   AppRegistry,
+  TouchableOpacity,
 } from 'react-native';  
 
 //Navigator
@@ -12,6 +13,7 @@ import LoginView from './scene/LoginView'
 import HomeScene from './scene/HomeScene'
 import MessageScreen from './scene/MessageScreen'
 import TabBar from './scene/TabBar'
+import OrderView from './scene/OrderView'
 
 
 export default class AwesomeProject extends Component {  //????谁知道这他妈要写项目名啊
@@ -26,7 +28,7 @@ export default class AwesomeProject extends Component {  //????谁知道这他�
 
   //默认的route数据，其中必须包含第一次需要渲染的场景，不然显示啥？
   initialRoute = {
-    scene:  LoginView,//LoginView
+    scene:  OrderView,//LoginView
     //你也可以在这里继续添加其他数据，然后在renderScene中取出，用于场景的数据传递，不展开叙述这个了！
   }
 
