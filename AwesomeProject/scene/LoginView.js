@@ -45,6 +45,7 @@ export default class LoginView extends Component{
       scene: HomeScene
     })
   }
+  
   render(){
   return (
     <View style={styles.container}>   

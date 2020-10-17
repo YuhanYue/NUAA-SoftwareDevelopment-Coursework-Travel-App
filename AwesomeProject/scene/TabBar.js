@@ -5,9 +5,10 @@ import {
 } from 'react-native';
 import TabNavigator from 'react-native-tab-navigator';
 
-import HomeScene from './HomeScene';
+import Home from './Home';
 import SignUpView from './SignUpView';
-
+import MineScene from './MineScene'
+import OrderView from './OrderView'
 
 
 
@@ -26,17 +27,9 @@ export default class TabBar extends Component {
           renderIcon={() => <Image style={bottom.icon} source={require('./image/test.jpeg')} />}
           renderSelectedIcon={() => <Image style={bottom.icon} source={require('./image/logo.jpeg')} />}
           onPress={() => this.setState({ selectedTab: 'HomePage' })}>
-          <HomeScene/>
+          <Home/>
         </TabNavigator.Item>
 
-        <TabNavigator.Item
-          selected={this.state.selectedTab === 'Search'}
-          title="Search"
-          renderIcon={() => <Image style={bottom.icon} source={require('./image/test.jpeg')} />}
-          renderSelectedIcon={() => <Image style={bottom.icon} source={require('./image/logo.jpeg')} />}
-          onPress={() => this.setState({ selectedTab: 'Search' })}>
-          <HomeScene/>
-        </TabNavigator.Item>
 
         <TabNavigator.Item
           selected={this.state.selectedTab === 'Mine'}
@@ -44,7 +37,7 @@ export default class TabBar extends Component {
           renderIcon={() => <Image style={bottom.icon} source={require('./image/test.jpeg')} />}
           renderSelectedIcon={() => <Image style={bottom.icon} source={require('./image/logo.jpeg')} />}
           onPress={() => this.setState({ selectedTab: 'Mine' })}>
-          <SignUpView/>
+          <MineScene/>
         </TabNavigator.Item>
     </TabNavigator>
     );
