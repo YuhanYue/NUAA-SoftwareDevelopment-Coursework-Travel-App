@@ -8,6 +8,15 @@ import {
 //import { ScreenStackHeaderCenterView } from 'react-native-screens';
 import styled from 'styled-components'
 import TravelRoute from '../components/TavelRoute';
+import {connect} from "react-redux"
+
+function mapStateToProps(state) {
+  return {
+    action: state.action
+  };
+}
+
+
 
 function getNextIndex(index) {
   var nextIndex = index + 1;
@@ -27,7 +36,8 @@ state = {
   translateY: new Animated.Value(44),
   thirdScale: new Animated.Value(0.8),
   thirdTranslateY: new Animated.Value(-50),
-  index: 0
+  index: 0,
+  opacity: new Animated.Value(-1)
 };
 
 componentWillMount() {
@@ -35,8 +45,13 @@ componentWillMount() {
         onMoveShouldSetPanResponder: (event, gestureState) => {
           if(gestureState.dx === 0 && gestureState.dy ===0 ){// forbidden pan 
             return false;
-          }else {
-            return true;
+          }else{
+            //return true;//enabling pan gesture, but donnot want it in full screen -> recieve the props
+            if (this.props.action == "openCard"){
+              return false;
+            } else {
+              return true;
+            }
           }
         },
 
@@ -46,6 +61,8 @@ componentWillMount() {
 
           Animated.spring(this.state.thirdScale, { toValue: 0.9 }).start();
           Animated.spring(this.state.thirdTranslateY, { toValue: 44 }).start();
+
+          Animated.timing(this.state.opacity, { toValue: 1 }).start();
         },
         
         onPanResponderMove: Animated.event([
@@ -56,6 +73,7 @@ componentWillMount() {
  
         onPanResponderRelease: () => {
           const PositionY = this.state.pan.y.__getValue()
+          Animated.timing(this.state.opacity, {toValue: -1}).start();
           //console.log(PositionY);
           if(PositionY > 200){//dropping 
             Animated.timing(this.state.pan, {toValue: { x: 0, y: 1000}
@@ -86,6 +104,7 @@ componentWillMount() {
 render() {
     return (
         <Container>
+          <AnimatedMask style={{ opacity: this.state.opacity }} />
             <Animated.View
                 style={{
                     transform: [
@@ -100,7 +119,7 @@ render() {
               image = {travelroute[this.state.index].image}
               timeline = {travelroute[this.state.index].timeline}
               text = {travelroute[this.state.index].text}
-              canOpen = {true}
+              canOpen = {true}//Only allow to open 1st card
               />
             </Animated.View>
             <Animated.View style = {{
@@ -152,13 +171,29 @@ render() {
     );
 }
 }
-export default Home
+export default connect(mapStateToProps)(Home);
+
 const Container = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
   background: #f0f3f5;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
 `;
+
+const Mask = styled.View`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.25);
+  z-index: -3;
+`;
+
+const AnimatedMask = Animated.createAnimatedComponent(Mask)
+
 
 const Text = styled.Text``;
 
@@ -175,7 +210,7 @@ const travelroute = [
     image: require("../image/logo.jpeg"),
     timeline: "Chad Goodman",
     text:
-      "Design+Code was the first ruilding a production ready app from scratch. "
+      "Design+Code was the first ruilding asa daskdqw diqhwdqjwhkqasaskdakajhkajshdkajshdkajhsdkajhsdkajhsdkajhsdkjahsdkajhsdkjahdkajjwhkqjhskqjhwskqjwhkqjwhksjqhwskqjha production ready app from scratch. "
   },
   {
     title: "Nikhiljay",

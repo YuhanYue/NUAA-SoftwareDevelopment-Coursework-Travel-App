@@ -4,7 +4,7 @@ import { Button, Text, View, Image, StyleSheet, TouchableOpacity, ToastAndroid, 
 
 import HomeScene from './HomeScene'
 import SignUpView from './SignUpView'
-import TabBar from "./TabBar";
+import TabBar from "../Navigator/TabBar";
 
 
 export default class LoginView extends Component{

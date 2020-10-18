@@ -1,161 +1,195 @@
-import React, {Component} from 'react'
+
+//OrderView Page
+import React from 'react'
 import {
-    Text,
-    View,
-    TouchableOpacity,
-    StyleSheet,
-    ScrollView
+  PanResponder,
+  Animated,
 } from 'react-native'
+//import { ScreenStackHeaderCenterView } from 'react-native-screens';
+import styled from 'styled-components'
+import Order  from '../components/Order'
+//import {connect} from "react-redux"
+//import { Provider } from 'react-redux';
 
-import CardView from 'react-native-cardview-wayne';
 
-// TODO: What to do with the module?
-export default class OrderView extends Component {
-    render() {
-        return (
-            
-            <View>
-                <ScrollView contentContainerStyle={styles.contentContainer}></ScrollView>
-				<CardView
-                style={{marginHorizontal: 12}}
-                cardElevation={4}
-                maxCardElevation={4}
-                radius={10}
-                backgroundColor={'#ffffff'}>
-                <View style={{padding:10, margin: 12}}>
-                    <View>
-                        <Text>ReactNative CardView for iOS and Android</Text>
-                    </View>
-                    <View>
-                        <Text>This is test</Text>
-                    </View>
-                </View>
-                <View style = {styles.canNot}>
-                <TouchableOpacity style={styles.btnStyle}
-                    onPress= {this.OrderView} >
-                <Text 
-                    style={styles.loginText}>打开订单</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.btnStyle}
-                    onPress= {this.OrderView} >
-                <Text 
-                    style={styles.loginText}>删除订单</Text>
-                </TouchableOpacity>
-                </View>
-            </CardView>
-            
-            <CardView
-                style={{marginHorizontal: 12}}
-                cardElevation={4}
-                maxCardElevation={4}
-                radius={10}
-                backgroundColor={'#ffffff'}>
-                <View style={{padding:10, margin: 12}}>
-                    <View>
-                        <Text>ReactNative CardView for iOS and Android</Text>
-                    </View>
-                    <View>
-                        <Text>This is test</Text>
-                    </View>
-                </View>
-                <View style = {styles.canNot}>
-                <TouchableOpacity style={styles.btnStyle}
-                    onPress= {this.OrderView} >
-                <Text 
-                    style={styles.loginText}>打开订单</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.btnStyle}
-                    onPress= {this.OrderView} >
-                <Text 
-                    style={styles.loginText}>删除订单</Text>
-                </TouchableOpacity>
-                </View>
-            </CardView>
-            <CardView
-                style={{marginHorizontal: 12}}
-                cardElevation={4}
-                maxCardElevation={4}
-                radius={10}
-                backgroundColor={'#ffffff'}>
-                <View style={{padding:10, margin: 12}}>
-                    <View>
-                        <Text>ReactNative CardView for iOS and Android</Text>
-                    </View>
-                    <View>
-                        <Text>This is test</Text>
-                    </View>
-                </View>
-                <View style = {styles.canNot}>
-                <TouchableOpacity style={styles.btnStyle}
-                    onPress= {this.OrderView} >
-                <Text 
-                    style={styles.loginText}>打开订单</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.btnStyle}
-                    onPress= {this.OrderView} >
-                <Text 
-                    style={styles.loginText}>删除订单</Text>
-                </TouchableOpacity>
-                </View>
-            </CardView>
-            </View>
-            
-            
-        );
-    }
+/*
+function mapStateToProps(state) {
+  return {
+    action: state.action
+  };
+}
+*/
+function getNextIndex(index) {
+  var nextIndex = index + 1;
+  if (nextIndex > order.length - 1) {
+    return 0;
+  }
+  return nextIndex;
+}
+
+class OrderView extends React.Component{
+  static navigationOptions = {
+    header: null
+};
+state = {
+  pan: new Animated.ValueXY(),
+  scale: new Animated.Value(0.9),
+  translateY: new Animated.Value(44),
+  thirdScale: new Animated.Value(0.8),
+  thirdTranslateY: new Animated.Value(80),
+  index: 0
 };
 
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,//充满容器
-      flexDirection: 'column',
-      backgroundColor: '#FFFFFF',
-      //设置次轴的对齐方式
-      alignItems: 'center',
-  },
-    circleImage: {
-      width: 100,
-      height: 100,
-      borderRadius: 50,
-      borderWidth: 3,
-      borderColor: 'white',
-      marginTop: 100,
-      marginBottom: 25,
-  },
-    textInput: {
-      height: 50,
-      width: 200,
-      marginBottom: 5,
-      backgroundColor: 'white',
-      textAlign: 'center',
-  },
-  btnStyle: {//bottom
-    height: 40,
-    width:  100,
-    borderRadius: 5,
-    marginTop: 20,
-    backgroundColor: '#4398ff',
-    //沿主轴方向居中
-    justifyContent: 'center',
-  },
-  loginText: {
-    //指定文本的对齐方式
-    textAlign: 'center',
-    color: 'white',
-    //设置文本垂直方向居中
-    textAlignVertical: 'center'},
+componentWillMount() {
+    this._panResponder = PanResponder.create({
+        onMoveShouldSetPanResponder: (event, gestureState) => {
+          if(gestureState.dx === 0 && gestureState.dy ===0 ){// forbidden pan 
+            return false;
+          }else{
+            return true;
+          }
+        },
 
-    canNot: {
-      width: 250,
-      marginTop: 0,
-      marginBottom: 10,
-      marginLeft: 10,
-      marginRight:  10,
-      flexDirection: 'row',
-      alignItems: 'center',
-      //设置主轴为两端对齐
-      justifyContent: 'space-between',
+        onPanResponderGrant: () => {//takes 1st card position
+          Animated.spring(this.state.scale, { toValue: 1 }).start();
+          Animated.spring(this.state.translateY, { toValue: 0 }).start();
+
+          Animated.spring(this.state.thirdScale, { toValue: 0.9 }).start();
+          Animated.spring(this.state.thirdTranslateY, { toValue: 44 }).start();
+        },
+        
+        onPanResponderMove: Animated.event([
+            null,
+            { dx: this.state.pan.x, dy: this.state.pan.y }
+        ]),
+
+ 
+        onPanResponderRelease: () => {
+          const PositionY = this.state.pan.y.__getValue()
+          //console.log(PositionY);
+          if(PositionY > 200){//dropping 
+            Animated.timing(this.state.pan, {toValue: { x: 0, y: 1000}
+            }).start(()=> {
+              this.state.pan.setValue({ x: 0, y: 0 });
+              this.state.scale.setValue(0.9);
+              this.state.translateY.setValue(44);
+              this.state.thirdScale.setValue(0.8);
+              this.state.thirdTranslateY.setValue(80);
+              this.setState({ index: getNextIndex(this.state.index) });
+
+            });
+          } else{
+              Animated.spring(this.state.pan, {toValue: { x: 0, y: 0 }}).start();
+              Animated.spring(this.state.scale, {toValue: 0.9}).start();
+              Animated.spring(this.state.translateY, {toValue: 44}).start();
+
+              Animated.spring(this.state.thirdScale, { toValue: 0.8 }).start();
+              Animated.spring(this.state.thirdTranslateY, { toValue: 80 }).start();
+          }
+          
+        }
+        
+    });
+}
+
+
+render() {
+    return (
+        <Container>
+            <Animated.View
+                style={{
+                    transform: [
+                        { translateX: this.state.pan.x },
+                        { translateY: this.state.pan.y }
+                    ]
+                }}
+                {...this._panResponder.panHandlers}
+            >
+              <Order
+              title={order[this.state.index].title} 
+              image = {order[this.state.index].image}
+              timeline = {order[this.state.index].timeline}
+              text = {order[this.state.index].text}
+              canOpen = {true}
+              />
+            </Animated.View>
+            <Animated.View style = {{
+              position: "absolute",
+              top: this.state.index,
+              left: 0,
+              zIndex: -1,
+              width: "100%",
+              height: "100%",
+              justifyContent:"center",
+              alignItems:"center",
+              transform: [
+                {scale: this.state.scale},
+                {translateY: this.state.translateY}
+              ]
+            }}>
+              <Order
+              title={order[getNextIndex(this.state.index)].title} 
+              image = {order[getNextIndex(this.state.index)].image}
+              timeline = {order[getNextIndex(this.state.index)].timeline}
+              text = {order[getNextIndex(this.state.index)].text}
+              />
+            </Animated.View>
+            
+            {/* 3rd card*/}
+             <Animated.View style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            zIndex: -3,
+            width: "100%",
+            height: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+            transform: [
+              { scale: this.state.thirdScale },
+              { translateY: this.state.thirdTranslateY }
+            ]
+          }}
+        >
+              <Order
+              title={order[getNextIndex(this.state.index + 1)].title} 
+              image = {order[getNextIndex(this.state.index + 1)].image}
+              timeline = {order[getNextIndex(this.state.index + 1)].timeline}
+              text = {order[getNextIndex(this.state.index + 1)].text}
+              />
+            </Animated.View>
+        </Container>
+    );
+}
+}
+export default OrderView
+
+const Container = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  background: #f0f3f5;
+`;
+
+const Text = styled.Text``;
+
+const order = [
+  {
+    title: "Test 1",
+    text:
+      "Zjd is piggy in China. Thanksmy app Price Tag, a top news app in China."
   },
-  });
-  
-  
+  {
+    title: "Test 2",
+    text:
+      "Design+Code was the first ruilding a production ready app from scratch. "
+  },
+  {
+    title: "Nikhiljay",
+    text:
+      "Rew=al website in @reactjs and I'm very excited with it."
+  }
+];
+
+
+

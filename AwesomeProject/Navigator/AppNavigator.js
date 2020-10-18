@@ -1,23 +1,14 @@
-import React, { Component } from 'react';  
-import {  
-  AppRegistry,
-  TouchableOpacity,
-} from 'react-native';  
+
 
 //Navigator
-import { Navigator } from 'react-native-deprecated-custom-components'
-import Cardview from 'react-native-cardview-wayne';
-
-//Scene
-import LoginView from './scene/LoginView'
-import HomeScene from './scene/HomeScene'
-import MessageScreen from './scene/MessageScreen'
-import TabBar from './scene/TabBar'
-import OrderView from './scene/OrderView'
-import Home from './scene/Home'
+//import { Navigator } from 'react-native-deprecated-custom-components'
+//import Cardview from 'react-native-cardview-wayne';
 
 
+import TabBar from './TabBar'
 
+
+/*
 export default class AppNavigator extends Component {  //????谁知道这他妈要写项目名啊
 
   //第一次调用的时候，第一个参数route就是initialRoute
@@ -30,7 +21,7 @@ export default class AppNavigator extends Component {  //????谁知道这他妈�
 
   //默认的route数据，其中必须包含第一次需要渲染的场景，不然显示啥？
   initialRoute = {
-    scene:  Home//LoginView
+    scene:  OrderView//LoginView
     //你也可以在这里继续添加其他数据，然后在renderScene中取出，用于场景的数据传递，不展开叙述这个了！
   }
 
@@ -41,7 +32,30 @@ export default class AppNavigator extends Component {  //????谁知道这他妈�
         renderScene={this.renderScene}/>
     );
   }
-}  
+}  */
 
 //AppRegistry.registerComponent('loginview', () => loginview)
-AppRegistry.registerComponent('AwesomeProject', () => AwesomeProject);
+//AppRegistry.registerComponent('AwesomeProject', () => AwesomeProject);
+
+import {createAppContainer } from "react-navigation";
+import {createStackNavigator} from 'react-navigation-stack'
+import Home from "../scene/Home";
+import LoginView from '../scene/LoginView'
+import HomeScreen from '../scene/HomeScreen'
+//import HomeScene from '../scene/HomeScene'
+//import SectionScreen from ‘../scene/SectionScreen";
+
+const AppNavigator = createStackNavigator(
+  {
+    //Login: LoginView,
+    Home: TabBar,
+    
+    //Section: SectionScreen
+  },
+  {
+    mode: "modal"
+  }
+);
+
+//export default createAppContainer(TabBar);
+export default createAppContainer(AppNavigator);
