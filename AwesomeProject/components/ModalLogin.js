@@ -1,3 +1,4 @@
+/*
 import React from "react";
 import styled from "styled-components";
 import {
@@ -109,7 +110,7 @@ class ModalLogin extends React.Component {
     const email = this.state.email;
     const password = this.state.password;
 
-   /* firebase
+    firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .catch(function(error) {
@@ -134,7 +135,7 @@ class ModalLogin extends React.Component {
             this.setState({ isSuccessful: false });
           }, 1000);
         }
-      });*/
+      });
   };
 
   fetchUser = () => {
@@ -301,3 +302,4 @@ const IconPassword = styled.Image`
   top: 239px;
   left: 35px;
 `;
+*/

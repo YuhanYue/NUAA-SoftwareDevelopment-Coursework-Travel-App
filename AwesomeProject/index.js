@@ -12,21 +12,9 @@ import Cardview from 'react-native-cardview-wayne';
 import LoginView from './scene/LoginView'
 import HomeScene from './scene/HomeScene'
 import MessageScreen from './scene/MessageScreen'
-import TabBar from './Navigator/TabBar'
+import TabNavigator from './Navigator/TabNavigator'
 import OrderView from './scene/OrderView'
 import AppNavigator from './Navigator/AppNavigator'
-
-/*
-export default class AwesomeProject extends Component {  //????谁知道这他妈要写项目名啊
-
-  render() {
-    return (
-      <OrderView/>
-    );
-  }
-}  */
-
-//AppRegistry.registerComponent('loginview', () => loginview)
 
 
 
@@ -84,15 +72,31 @@ const store = createStore(reducer);
 
 const AwesomeProject = () => (
 
-  <ClassifyScreen />
-  /*<ApolloProvider client={client}>
+  //<ClassifyScreen />
+  <ApolloProvider client={client}>
   <Provider store={store}>
-    <Home />
+    <AppNavigator />
   </Provider>
-</ApolloProvider>*/
+</ApolloProvider>
 
 );
 
 export default AwesomeProject;
 
 AppRegistry.registerComponent('AwesomeProject', () => AwesomeProject);
+
+
+
+
+/*
+export default class AwesomeProject extends Component {  //????谁知道这他妈要写项目名啊
+
+  render() {
+    return (
+      <OrderView/>
+    );
+  }
+}  */
+
+//AppRegistry.registerComponent('loginview', () => loginview)
+

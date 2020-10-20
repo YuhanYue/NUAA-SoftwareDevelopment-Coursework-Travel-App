@@ -1,112 +1,88 @@
-import React from "react";
-import styled from "styled-components";
-import { Animated, TouchableOpacity, Dimensions } from "react-native";
-import { Icon } from "expo";
-import MenuItem from "./MenuItem";
-import { connect } from "react-redux";
-import { AsyncStorage } from "react-native";
+import React, {Component} from 'react';
+import styled from 'styled-components';
+import {Animated, TouchableOpacity, Dimensions} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import MenuItem from '../components/MenuItem';
+import {connect} from 'react-redux';
 
-const screenWidth = Dimensions.get("window").width;
-var cardWidth = screenWidth;
-if (screenWidth > 500) {
-  cardWidth = 500;
-}
+//props cannot change, state can change
+
+const screeHeight = Dimensions.get('window').height;
+const screenWidth = Dimensions.get('window').width;
 
 function mapStateToProps(state) {
-  return { action: state.action };
+  return {action: state.action}; //connect redux to props
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     closeMenu: () =>
       dispatch({
-        type: "CLOSE_MENU"
+        type: 'CLOSE_MENU'
       }),
-    updateName: name =>
-      dispatch({
-        type: "UPDATE_NAME",
-        name
-      }),
-    updateAvatar: avatar =>
-      dispatch({
-        type: "UPDATE_AVATAR",
-        avatar
-      })
   };
 }
 
-const screenHeight = Dimensions.get("window").height;
-
 class Menu extends React.Component {
   state = {
-    top: new Animated.Value(screenHeight)
+    top: new Animated.Value(screeHeight),
   };
 
   componentDidMount() {
     this.toggleMenu();
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(){
     this.toggleMenu();
   }
 
+  
+  //close menu
   toggleMenu = () => {
-    if (this.props.action == "openMenu") {
+    if (this.props.action == 'openMenu') {
       Animated.spring(this.state.top, {
-        toValue: 54
+        //set animation properties
+        toValue: 0,
       }).start();
     }
 
-    if (this.props.action == "closeMenu") {
+    if (this.props.action == 'closeMenu') {
       Animated.spring(this.state.top, {
-        toValue: screenHeight
+        toValue: screeHeight,
       }).start();
     }
   };
 
-  handleMenu = index => {
-    if (index === 3) {
-      this.props.closeMenu();
-      this.props.updateName("Stranger");
-      this.props.updateAvatar(
-        "https://cl.ly/55da82beb939/download/avatar-default.jpg"
-      );
-      AsyncStorage.clear();
-    }
-  };
-
+  //大小写别写错了...
   render() {
     return (
-      <AnimatedContainer style={{ top: this.state.top }}>
+      <AnimatedContainer style={{top: this.state.top}}>
         <Cover>
-          <Image source={require("../assets/background2.jpg")} />
-          <Title>Meng To</Title>
-          <Subtitle>Designer at Design+Code</Subtitle>
+          <Image source={require('../assets/background2.jpg')} />
+          <Title> Yuhan </Title>
+          <Subtitle> Hi </Subtitle>
         </Cover>
         <TouchableOpacity
           onPress={this.props.closeMenu}
           style={{
-            position: "absolute",
+            position: 'absolute',
             top: 120,
-            left: "50%",
+            left: '50%',
             marginLeft: -22,
-            zIndex: 1
-          }}
-        >
+            zIndex: 1,
+          }}>
           <CloseView>
-            <Icon.Ionicons name="ios-close" size={44} color="#546bfb" />
+            <Icon name="close" size={44} color="#546bfb" />
           </CloseView>
         </TouchableOpacity>
         <Content>
           {items.map((item, index) => (
-            <TouchableOpacity
+            <MenuItem
               key={index}
-              onPress={() => {
-                this.handleMenu(index);
-              }}
-            >
-              <MenuItem icon={item.icon} title={item.title} text={item.text} />
-            </TouchableOpacity>
+              icon={item.icon}
+              title={item.title}
+              text={item.text}
+            />
           ))}
         </Content>
       </AnimatedContainer>
@@ -114,27 +90,28 @@ class Menu extends React.Component {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Menu);
+export default connect(mapStateToProps, mapDispatchToProps)(Menu);
 
-const Image = styled.Image`
+const Container = styled.View`
   position: absolute;
+  background: white;
   width: 100%;
   height: 100%;
+  z-index: 100;
+`;
+const AnimatedContainer = Animated.createAnimatedComponent(Container);
+
+const Cover = styled.View`
+  height: 142px;
+  background: black;
+  justify-content: center;
+  align-items: center;
 `;
 
-const Title = styled.Text`
-  color: white;
-  font-size: 24px;
-  font-weight: 600;
-`;
-
-const Subtitle = styled.Text`
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.5);
-  margin-top: 8px;
+const Content = styled.View`
+  height: ${screeHeight};
+  background-color: #f0f3f5;
+  padding: 50px;
 `;
 
 const CloseView = styled.View`
@@ -147,51 +124,42 @@ const CloseView = styled.View`
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
 `;
 
-const Container = styled.View`
+const Image = styled.Image`
   position: absolute;
-  background: white;
-  width: ${cardWidth};
-  align-self: center;
+  width: 100%;
   height: 100%;
-  z-index: 100;
-  border-radius: 10px;
-  overflow: hidden;
+`;
+const Title = styled.Text`
+  color: white;
+  font-size: 24px;
+  font-weight: 600;
 `;
 
-const AnimatedContainer = Animated.createAnimatedComponent(Container);
-
-const Cover = styled.View`
-  height: 142px;
-  background: black;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Content = styled.View`
-  height: ${screenHeight};
-  background: #f0f3f5;
-  padding: 50px;
+const Subtitle = styled.Text`
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 8px;
 `;
 
 const items = [
   {
-    icon: "ios-settings",
-    title: "Account",
-    text: "settings"
+    icon: 'settings',
+    title: 'Account',
+    text: 'settings',
   },
   {
-    icon: "ios-card",
-    title: "Billing",
-    text: "payments"
+    icon: 'ios-card',
+    title: 'Biling',
+    text: 'payments',
   },
   {
-    icon: "ios-compass",
-    title: "Learn React",
-    text: "start course"
+    icon: 'settings',
+    title: 'Reviews',
+    text: 'your reviews',
   },
   {
-    icon: "ios-exit",
-    title: "Log out",
-    text: "see you soon!"
-  }
+    icon: 'ios-exit',
+    title: 'Log out',
+    text: 'see you soon',
+  },
 ];

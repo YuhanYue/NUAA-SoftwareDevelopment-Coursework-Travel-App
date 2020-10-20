@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import * as Icon from '@expo/vector-icons'
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const MenuItem = props => (
   <Container>
     <IconView>
-      <Icon.Ionicons name={props.icon} size={24} color="#546bfb" />
+      <Icon name={props.icon} size={24} color="#546bfb" />
     </IconView>
     <Content>
       <Title>{props.title}</Title>

@@ -57,7 +57,9 @@ import {createStackNavigator} from 'react-navigation-stack'
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Home from '../scene/Home';
-import MineScene from '../scene/MineScene'
+//import MineScene from '../scene/MineScene'
+import ClassfiyScreen from '../scene/ClassifyScreen'
+import SectionScreen from '../scene/SectionScreen'
 
 
 
@@ -67,52 +69,69 @@ const inactiveColor = "#b8bece";
 const HomeStack = createStackNavigator(
   {
     Home: Home,
-  },
-
-);
-
-HomeStack.navigationOptions = ({ navigation }) => {
-  var tabBarVisible = true;
-  const routeName = navigation.state.routes[navigation.state.index].routeName;
-
-  
-
-  return {
-    tabBarVisible,
-    tabBarLabel: "Home",
-    tabBarIcon: ({ focused }) => (
-      <Icon name="Home" size={30} color="#546bfb" />
-    )
-  };
-};
-
-
-const MineStack = createStackNavigator(
-  {
-    Mine: MineScene
   }
 );
 
-MineStack.navigationOptions = ({ navigation }) => {
-  var tabBarVisible = true;
+HomeStack.navigationOptions = ({ navigation }) => {
+  var tabBarVisible = true;//by default
   const routeName = navigation.state.routes[navigation.state.index].routeName;
+
+  
   return {
     tabBarVisible,
-    tabBarLabel: "Mine",
+    tabBarLabel: "Explore",
+
     tabBarIcon: ({ focused }) => (
-      <Icon name="close" size={30} color="#546bfb" />
+      <Icon name="Close" size={30} color={
+        focused ? activeColor : inactiveColor} 
+        />
     )
   };
 };
 
 
+const ClassifyStack= createStackNavigator(
+  {
+    Classify: ClassfiyScreen,
+    Section: SectionScreen,
+  }
+);
 
 
-const TabBar = createBottomTabNavigator({
-  HomeStack,
-  MineStack,
+ClassifyStack.navigationOptions = ({ navigation }) => {
+  var tabBarVisible = true;
+  const routeName = navigation.state.routes[navigation.state.index].routeName;
+
+  //hide tabBar
+  if(routeName == "Section"){
+    tabBarVisible = false;
+  }
+  return {
+    tabBarVisible,
+    tabBarLabel: "Home",
+
+    tabBarIcon: ({ focused }) => (
+      <Icon name="Close" size={30} color={
+        focused ? activeColor : inactiveColor} 
+        />
+    )
+  };
+};
+
+const ProjectsStack = createStackNavigator({
+  Projects: SectionScreen,
 });
 
-export default TabBar;
+
+
+
+const TabNavigator = createBottomTabNavigator({
+  ClassifyStack,
+  HomeStack,
+  ProjectsStack
+  
+});
+
+export default TabNavigator;
 
 

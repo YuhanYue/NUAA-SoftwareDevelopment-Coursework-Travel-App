@@ -6,3 +6,4 @@ export const saveState = async state => {
     await AsyncStorage.setItem("state", serializedState);
   } catch (error) {}
 };
+

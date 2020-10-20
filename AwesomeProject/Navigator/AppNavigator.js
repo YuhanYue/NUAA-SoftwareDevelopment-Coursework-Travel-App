@@ -5,7 +5,7 @@
 //import Cardview from 'react-native-cardview-wayne';
 
 
-import TabBar from './TabBar'
+
 
 
 /*
@@ -38,18 +38,21 @@ export default class AppNavigator extends Component {  //????谁知道这他妈�
 //AppRegistry.registerComponent('AwesomeProject', () => AwesomeProject);
 
 import {createAppContainer } from "react-navigation";
-import {createStackNavigator} from 'react-navigation-stack'
+import {createStackNavigator} from 'react-navigation-stack'//how many screens you wanna have in a stack
 import Home from "../scene/Home";
 import LoginView from '../scene/LoginView'
-import HomeScreen from '../scene/HomeScreen'
+import TabNavigator from './TabNavigator'
+import SectionScreen from '../scene/SectionScreen'
+import ClassifyScreen from "../scene/ClassifyScreen";
 //import HomeScene from '../scene/HomeScene'
 //import SectionScreen from ‘../scene/SectionScreen";
+//login->tabbar
 
 const AppNavigator = createStackNavigator(
   {
     //Login: LoginView,
-    Home: TabBar,
-    
+    Home: ClassifyScreen,
+    Section: SectionScreen
     //Section: SectionScreen
   },
   {
@@ -58,4 +61,4 @@ const AppNavigator = createStackNavigator(
 );
 
 //export default createAppContainer(TabBar);
-export default createAppContainer(AppNavigator);
+export default createAppContainer(TabNavigator);
