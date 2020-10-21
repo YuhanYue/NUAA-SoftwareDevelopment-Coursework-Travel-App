@@ -46,11 +46,14 @@ class ClassifyScreen extends React.Component {
     }
   }
 
+
+
   render() {
     return (
       <AnimatedContainer>
         <Menu />
         <ScrollView style={{height: '100%'}}>
+          {/*user*/}
           <TitleBar>
             <TouchableOpacity onPress = {this.props.openMenu}>
               <Avatar source={require('./image/logo.jpeg')} />
@@ -61,7 +64,10 @@ class ClassifyScreen extends React.Component {
               style={{position: 'absolute', right: 20, top: 5}}
             />
           </TitleBar>
+          {/*Start your journey from... */}
+          
           <Subtitle style ={{paddingTop: 10}}>Starting your journey from...</Subtitle>
+          
           <ScrollView
             style={{
               flexDirection: 'row',
@@ -71,15 +77,21 @@ class ClassifyScreen extends React.Component {
             }}
             horizontal={true}
             showsHorizontalScrollIndicator={false}>
+        
             {logos.map((logo, index) => (
+              <TouchableOpacity 
+              onPress = { () => {this.props.navigation.push("Home")}}>
               <Logo
                 key={index}
                 image={logo.image}
                 text={logo.text}
                 //using a separate place
               />
+              </TouchableOpacity>
             ))}
+          {/*Eplore more... */}
           </ScrollView>
+          
           <Subtitle>Continue Exploring...</Subtitle>
           <ScrollView
             horizontal={true}

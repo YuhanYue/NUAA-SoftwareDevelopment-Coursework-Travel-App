@@ -1,6 +1,8 @@
+//我的订单，评论，修改个人信息
+
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import {Animated, TouchableOpacity, Dimensions} from 'react-native';
+import {Animated, TouchableOpacity, Dimensions, StatusBar} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MenuItem from '../components/MenuItem';
 import {connect} from 'react-redux';
@@ -36,7 +38,7 @@ class Menu extends React.Component {
     this.toggleMenu();
   }
 
-  
+
   //close menu
   toggleMenu = () => {
     if (this.props.action == 'openMenu') {
@@ -57,6 +59,7 @@ class Menu extends React.Component {
   render() {
     return (
       <AnimatedContainer style={{top: this.state.top}}>
+        <StatusBar hide/>
         <Cover>
           <Image source={require('../assets/background2.jpg')} />
           <Title> Yuhan </Title>

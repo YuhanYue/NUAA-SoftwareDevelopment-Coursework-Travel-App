@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import { Button, Text, View, Image, StyleSheet, TouchableOpacity, ToastAndroid, TextInput} from "react-native";
 //ios端提醒直接用Alert
 
-import HomeScene from './HomeScene'
-import SignUpView from './SignUpView'
+import Home from './Home'
 
 
-export default class LoginView extends Component{
+
+export default class SignUpView extends Component{
   username = '';
   password = '';
   repassword = '';
@@ -27,7 +27,7 @@ export default class LoginView extends Component{
     //检查用户名是否可用/两次密码是否一致
     if (this.repassword == this.password) {
       ToastAndroid.show('注册成功',ToastAndroid.SHORT);
-      this.props.navigator.pop()
+      this.props.navigation.pop()
     } else{
       ToastAndroid.show('两次密码输入不一致!',ToastAndroid.SHORT);
     }

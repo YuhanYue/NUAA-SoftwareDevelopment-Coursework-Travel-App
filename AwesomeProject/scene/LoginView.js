@@ -2,9 +2,12 @@ import React, { Component } from "react";
 import { Button, Text, View, Image, StyleSheet, TouchableOpacity, ToastAndroid, TextInput} from "react-native";
 //ios端提醒直接用Alert
 
-import HomeScene from './HomeScene'
+import HomeScene from './Home'
 import SignUpView from './SignUpView'
 import TabNavigator from "../Navigator/TabNavigator";
+import {createBottomTabNavigator} from "react-navigation-tabs";
+import {createStackNavigator} from 'react-navigation-stack'
+import ClassifyScreen from "./ClassifyScreen";
 
 
 export default class LoginView extends Component{
@@ -22,9 +25,7 @@ export default class LoginView extends Component{
   //登陆跳转
   login = () => {
     if (this.username == 'admin' && this.password == '123') {
-      this.props.navigator.replace({
-        scene: TabBar,
-      })
+      this.props.navigation.replace("Tab")
       ToastAndroid.show('登录成功',ToastAndroid.SHORT);
     } else {
       ToastAndroid.show('登录失败',ToastAndroid.SHORT);
@@ -33,17 +34,12 @@ export default class LoginView extends Component{
 
   //注册跳转
   SignUp = ()=>{
-    this.props.navigator.push({
-      //SignUpScene
-      scene: SignUpView
-    })
+    this.props.navigation.push("SignUp")
   }
 
   //忘记密码跳转
   ForgetPasswd = () =>{
-    this.props.navigator.push({
-      scene: HomeScene
-    })
+    this.props.navigation.push("")
   }
   
   render(){
@@ -71,7 +67,7 @@ export default class LoginView extends Component{
         {/*无法登录  新用户*/}
             <View style={styles.canNot}>
               <TouchableOpacity
-                onPress={this.SignUp}>
+                onPress={ () => {this.props.navigation.push("SignUp")}}>
                 <Text style={{color: '#4398ff'}}>Sign Up</Text>
               </TouchableOpacity>
               <TouchableOpacity

@@ -44,15 +44,17 @@ import LoginView from '../scene/LoginView'
 import TabNavigator from './TabNavigator'
 import SectionScreen from '../scene/SectionScreen'
 import ClassifyScreen from "../scene/ClassifyScreen";
+import SignUpView from '../scene/SignUpView'
 //import HomeScene from '../scene/HomeScene'
 //import SectionScreen from ‘../scene/SectionScreen";
 //login->tabbar
 
 const AppNavigator = createStackNavigator(
   {
+    
     //Login: LoginView,
-    Home: ClassifyScreen,
-    Section: SectionScreen
+    //SignUp: SignUpView,
+    Tab:TabNavigator
     //Section: SectionScreen
   },
   {
@@ -61,4 +63,4 @@ const AppNavigator = createStackNavigator(
 );
 
 //export default createAppContainer(TabBar);
-export default createAppContainer(TabNavigator);
+export default createAppContainer(AppNavigator);
