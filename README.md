@@ -1,5 +1,7 @@
 # NUAA-SoftwareDevelopment-Coursework-Travel-App
 基于Andorid的旅游路线推荐App🌴
+Frontend: React Native (thanks to zjd
+Bakcend: 没想好 都不会 慢慢学吧
 一个月从0到无穷大，杀了我吧😁
 
 P.S. 我 恨  陈 海 燕
