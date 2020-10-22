@@ -9,7 +9,7 @@ P.S. 我 恨  陈 海 燕
 21/Oct 前端基本搭建完成  
 22/Oct 数据库搭建ing  
 
-##Plan
+## To-do
 27/Oct前需完成登陆检验+注册+主页数据从mysql中的读取  
 31/Oct  
 7/Nov
