@@ -1,10 +1,9 @@
 var express = require('express');
 var router = express.Router();
-
 // 导入MySQL模块
 var mysql = require('mysql');
-var dbConfig = require('../DBconfig');
-var userSQL = require('..//userSQLmapping');
+var dbConfig = require('../AwesomeProject/DBconfig');
+var userSQL = require('../AwesomeProject/userSQLmapping');
 // 使用DBConfig.js的配置信息创建一个MySQL连接池
 var pool = mysql.createPool( dbConfig.mysql );
 // 响应一个JSON数据

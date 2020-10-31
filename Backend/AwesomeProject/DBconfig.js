@@ -19,11 +19,12 @@ settings.connect(function (err) {
 module.exports = settings;*/
 
 
-var settings={};
-settings.db={
+var DBconfig={};
+DBconfig.db={
     host: 'localhost',
     user: 'root',
     password: '123456',
     database:'TravelApp'
 }
-module.exports=settings;
+
+module.exports = DBconfig;
