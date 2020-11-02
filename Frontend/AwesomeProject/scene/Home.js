@@ -16,8 +16,6 @@ function mapStateToProps(state) {
   };
 }
 
-
-
 function getNextIndex(index) {
   var nextIndex = index + 1;
   if (nextIndex > travelroute.length - 1) {
@@ -137,10 +135,10 @@ render() {
               ]
             }}>
               <TravelRoute 
-              title={travelroute[getNextIndex(this.state.index)].title} 
-              image = {travelroute[getNextIndex(this.state.index)].image}
-              timeline = {travelroute[getNextIndex(this.state.index)].timeline}
-              text = {travelroute[getNextIndex(this.state.index)].text}
+              title={travelroute[getNextIndex(this.state.index +1 )].title} 
+              image = {travelroute[getNextIndex(this.state.index+1)].image}
+              timeline = {travelroute[getNextIndex(this.state.index+1)].timeline}
+              text = {travelroute[getNextIndex(this.state.index+1)].text}
               />
             </Animated.View>
             
@@ -161,10 +159,10 @@ render() {
           }}
         >
               <TravelRoute 
-              title={travelroute[getNextIndex(this.state.index + 1)].title} 
-              image = {travelroute[getNextIndex(this.state.index + 1)].image}
-              timeline = {travelroute[getNextIndex(this.state.index + 1)].timeline}
-              text = {travelroute[getNextIndex(this.state.index + 1)].text}
+              title={travelroute[getNextIndex(this.state.index + 2)].title} 
+              image = {travelroute[getNextIndex(this.state.index + 2)].image}
+              timeline = {travelroute[getNextIndex(this.state.index + 2)].timeline}
+              text = {travelroute[getNextIndex(this.state.index + 2)].text}
               />
             </Animated.View>
         </Container>

@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
+
 const Card = props => (
   <Container style={{ elevation: 10 }}>
     <Cover>

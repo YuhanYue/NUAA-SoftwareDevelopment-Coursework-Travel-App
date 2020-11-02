@@ -1,6 +1,6 @@
 
-/*
-var fs = require('fs');
+
+/*var fs = require('fs');
 var express = require('express');
 var app = express();
 
@@ -10,7 +10,7 @@ app.get('/b', function (req, res) {
 
 app.listen(8880);*/
 
-
+/*
 var express = require('express');
 var app = express();
 
@@ -25,29 +25,30 @@ var con = mysql.createConnection({
   host:'localhost',
   port:'3306',
   user:'root',
-  password:'123456',// empty for Windows
+  password:'123456',// empty for windows
   database:'TravelApp'
+
 });
 
 //create listen
 
-var server = app.listen(4545, function(){
-  var host = server.address().address;
-  var port = server.address().port;
+var server = app.listen(4547, function(){
+  var host = server.address().address
+  var port = server.address().port
 });
 
 con.connect(function(error){
   if(error) console.log(error);
-  else console.log("connected");
+  else console.log("connected");ß
 });
 
 app.get('/Volumes/OVERAINY/Github/Travel-App/Frontend/AwesomeProject', function(req, res){
-  con.query("select * from Admin", function(error, rows, fields){
+  con.query("select * from Users", function(error, rows, fields){
     if(error) console.log(error);
-
     else{
       console.log(rows);
       res.send(rows);
     }
   });
 });
+*/

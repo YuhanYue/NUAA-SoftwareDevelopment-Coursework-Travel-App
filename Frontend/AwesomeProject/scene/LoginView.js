@@ -8,7 +8,7 @@ import TabNavigator from "../Navigator/TabNavigator";
 import {createBottomTabNavigator} from "react-navigation-tabs";
 import {createStackNavigator} from 'react-navigation-stack'
 import ClassifyScreen from "./ClassifyScreen";
-import { response } from "express";
+//import { response } from "express";
 
 
 export default class LoginView extends Component{
@@ -25,13 +25,13 @@ export default class LoginView extends Component{
 
   //登陆跳转
   login = () => {
-    /*if (this.username == 'admin' && this.password == '123') {
+    if (this.username == 'admin' && this.password == '123') {
       this.props.navigation.replace("Tab")
       ToastAndroid.show('登录成功',ToastAndroid.SHORT);
     } else {
       ToastAndroid.show('登录失败',ToastAndroid.SHORT);
-    }*/
-    fetch('', {
+    }
+    /*fetch('', {
 
     }).then((response) => response.json())
       .then((responseJson) => {
@@ -39,7 +39,7 @@ export default class LoginView extends Component{
       })
       .catch((error)=>{
         console.error(error);
-      });
+      });*/
   };
 
   //注册跳转

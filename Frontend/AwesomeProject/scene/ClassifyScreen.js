@@ -1,7 +1,7 @@
 //分类的数据，
 
 import React from 'react';
-import {ScrollView, TouchableOpacity, Animated, Easing} from 'react-native';
+import {ScrollView, TouchableOpacity, Animated, Easing, View} from 'react-native';
 import Card from '../components/Card';
 
 import styled from 'styled-components';
@@ -12,10 +12,13 @@ import { connect } from "react-redux";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Logo from '../components/Logo';
 import Menu from '../components/Menu';
+import { FlatList } from 'react-native-gesture-handler';
 
 function mapStateToProps(state)  {
   return {action: state.action};
+ 
 }
+
 
 function mapDispatchToProps(dispatch){
   return {
@@ -31,11 +34,13 @@ class ClassifyScreen extends React.Component {
     title: "Home"
   }
   state = {
-    scale: new Animated.Value(1)
+    scale: new Animated.Value(1),
   };
 
+ 
   componentDidUpdate(){
-    this.toggleMenu()
+    this.toggleMenu(),
+    this.fetchData()
   }
 
   toggleMenu = () =>{
@@ -97,6 +102,7 @@ class ClassifyScreen extends React.Component {
             horizontal={true}
             style={{paddingBottom: 30}}
             showsHorizontalScrollIndicator={false}>
+
             {cards.map((card, index) => (
               <TouchableOpacity key={index} onPress = {() => {
                 this.props.navigation.push("Section", {
@@ -104,7 +110,7 @@ class ClassifyScreen extends React.Component {
                   //passing data
                 })
               }}>
-              <Card
+              <Card 
                 title={card.title}
                 image={card.image}
                 caption={card.caption}
@@ -185,20 +191,6 @@ const cards = [
     title: 'React Native',
     image: require('../image/test.jpeg'),
     subtitle: 'text',
-    caption: '1 to 12',
-    logo: require('../assets/logo-react.png'),
-  },
-  {
-    title: 'React Native',
-    image: require('../image/test.jpeg'),
-    subtitle: 'react-Native',
-    caption: '1 to 12',
-    logo: require('../assets/logo-react.png'),
-  },
-  {
-    title: 'React Native',
-    image: require('../image/test.jpeg'),
-    subtitle: 'react-Native',
     caption: '1 to 12',
     logo: require('../assets/logo-react.png'),
   },

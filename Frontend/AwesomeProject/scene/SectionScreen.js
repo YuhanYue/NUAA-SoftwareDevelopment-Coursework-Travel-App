@@ -1,14 +1,52 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Button, TouchableOpacity, StatusBar, Text} from 'react-native';
+import {Button, TouchableOpacity, StatusBar, Text, View} from 'react-native';
  
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { ScrollView } from 'react-native-gesture-handler';
+import { FlatList, ScrollView, ListView } from 'react-native-gesture-handler';
 
 class SectionScreen extends React.Component {
   static navigationOptions = {
     heeder: null,
   };
+
+  constructor(props){
+    super(props);
+    this.state={
+        data:[],
+        resultJson:null
+    };
+  }
+  //setState会重新调用render()
+  
+  /*
+  state = {
+    data:[],
+    resultJson:null
+  };*/
+  /*
+  fetchData=  async()=>{
+    const response = await fetch('http://127.20.10.10:4545/Volumes/OVERAINY/Github/Travel-App/Frontend/AwesomeProject');
+    const card = await response.json();
+    this.setState({data:card});
+  }*/
+  fetchData(){
+    var url = 'https://facebook.github.io/react-native/movies.json';
+    fetch(url)
+        .then((res)=> res.json())
+        .then((json)=>{
+            this.setState({resultJson:json});//将json数据传递出去，setState会重新调用render()
+        })
+        .catch((e)=>{
+            alert(e);
+        });
+  }
+
+  componentDidMount(){
+    this.fetchData();
+    console.log(this.state.data);
+  }
+
   render() {
     //recieve data
     const {navigation} = this.props;
@@ -16,7 +54,14 @@ class SectionScreen extends React.Component {
     return (
       <Container>
         <StatusBar hidden />
-        <Cover>
+        <View>
+        <FlatList
+         data={this.state.data}
+         renderItem={this.renderItemView}
+     >
+     </FlatList>
+        </View>
+        {/*<Cover>
           <Image source={section.image} />
           <Wrapper>
             <Logo source={section.logo} />
@@ -28,18 +73,19 @@ class SectionScreen extends React.Component {
         <TouchableOpacity style={{position: 'absolute', top: 20, right: 20}}>
           {/*<CloseView>
        <Icon name = "close" size={36} color='#4775f2' style = {{marginTop: -2}}/>
-      </CloseView>*/}
+      </CloseView>
         </TouchableOpacity>
         <ScrollView>
         <Content>
-          <Text>This is aKoa 是一个新的 web 框架，由 Express 幕后的原班人马打造
-          Koa 是一个新的 web 框架，由 Express 幕后的原班人马
-          Koa 是一个新的 web 框架，由 Express 幕后的原班人马打造， 致力于成为 web 应用和 API 开发领域中的一个更小、更富有表现力、更健壮的基石。 通过利用 async 函数，KKoa 是一个新的 web 框架，由 Express 幕后的原班人马打造， 致力于成为 web 应用和 API 开发领域中的一个更小、更富有表现力、更健壮的基石。 通过利用 async 函数，Koa 帮你丢弃回调函数，并有力地增强错误处理。 Koa 并
-          Koa 是一个新的 web 框架，由 Express 幕后的原班人马打造， 致力于成为 web 应用和 API 开发领域中的一个更小、更富有表现力、更健壮的基石。 通过利用 async 函数，Koa 帮你丢弃回调函数，并有力地增强错误处理。 Koa 并Koa 是一个新的 web 框架，由 Express 幕后的原班人马打造， 致力于成为 web 应用和 API 开发领域中的一个更小、更富有表现力、更健壮的基石。 通过利用 async 函数，Koa 帮你丢弃回调函数，并有力地增强错误处理。 Koa 并Koa 是一个新的 web 框架，由 Express 幕后的原班人马打造， 致力于成为 web 应用和 API 开发领域中的一个更小、更富有表现力、更健壮的基石。 通过利用 async 函数，Koa 帮你丢弃回调函数，并有力地增强错误处理。 Koa 并Koa 是一个新的 web 框架，由 Express 幕后的原班人马打造， 致力于成为 web 应用和 API 开发领域中的一个更小、更富有表现力、更健壮的基石。 通过利用 async 函数，Koa 帮你丢弃回调函数，并有力地增强错误处理。 Koa 并
-          Koa 是一个新的 web 框架，由 Express 幕后的原班人马打造， 致力于成为 web 应用和 API 开发领域中的一个更小、更富有表现力、更健壮的基石。 通过利用 async 函数，Koa 帮你丢弃回调函数，并有力地增强错误处理。 Koa 并oa 帮你丢弃回调函数，并有力地增强错误处理。 Koa 并打造， 致力于成为 web 应用和 API 开发领域中的一个更小、更富有表现力、更健壮的基石。 通过利用 async 函数，Koa 帮你丢弃回调函数，并有力地增强错误处理。 Koa 并， 致力于成为 web 应用和 API 开发领域中的一个更小、更富有表现力、更健壮的基石。 通过利用 async 函数，Koa 帮你丢弃回调函数，并有力地增强错误处理。 Koa 并 </Text>
+        <ListView
+           dataSource={this.state.data}
+           renderRow={(rowData)=>this.renderRow(rowData)}
+         >
+           </ListView>
+        <Text>This is a test!!!!</Text>
         </Content>
         </ScrollView>
-        <Text>This is a test</Text>
+          <Text>This is a test!!!!</Text>*/}
       </Container>
     );
   }
