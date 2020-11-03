@@ -1,24 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
 import {Button, TouchableOpacity, StatusBar, Text, View} from 'react-native';
- 
+
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { FlatList, ScrollView, ListView } from 'react-native-gesture-handler';
+import {FlatList, ScrollView, ListView} from 'react-native-gesture-handler';
 
 class SectionScreen extends React.Component {
   static navigationOptions = {
     heeder: null,
   };
 
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state={
-        data:[],
-        resultJson:null
+    this.state = {
+      data: null,
     };
   }
   //setState会重新调用render()
-  
+
   /*
   state = {
     data:[],
@@ -30,21 +29,23 @@ class SectionScreen extends React.Component {
     const card = await response.json();
     this.setState({data:card});
   }*/
-  fetchData(){
-    var url = 'https://facebook.github.io/react-native/movies.json';
+  fetchData() {
+    var url =
+      'http://172.20.10.10:4545/Volumes/OVERAINY/Github/Travel-App/Frontend/AwesomeProject';
     fetch(url)
-        .then((res)=> res.json())
-        .then((json)=>{
-            this.setState({resultJson:json});//将json数据传递出去，setState会重新调用render()
-        })
-        .catch((e)=>{
-            alert(e);
-        });
+      .then((res) => res.json()) //转化为json
+      .then((json) => {
+        this.setState({data: json}); //将json数据传递出去，setState会重新调用render()
+        console.log(this.state.data);
+      })
+      .catch((e) => {
+        alert(e);
+      });
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.fetchData();
-    console.log(this.state.data);
+    //console.log(this.state.data);
   }
 
   render() {
@@ -55,13 +56,11 @@ class SectionScreen extends React.Component {
       <Container>
         <StatusBar hidden />
         <View>
-        <FlatList
-         data={this.state.data}
-         renderItem={this.renderItemView}
-     >
-     </FlatList>
+          <FlatList
+            data={this.state.data}
+            renderItem={this.renderItemView}></FlatList>
         </View>
-        {/*<Cover>
+        <Cover>
           <Image source={section.image} />
           <Wrapper>
             <Logo source={section.logo} />
@@ -71,37 +70,51 @@ class SectionScreen extends React.Component {
           <Caption>{section.caption}</Caption>
         </Cover>
         <TouchableOpacity style={{position: 'absolute', top: 20, right: 20}}>
-          {/*<CloseView>
-       <Icon name = "close" size={36} color='#4775f2' style = {{marginTop: -2}}/>
-      </CloseView>
+          <CloseView>
+            <Icon
+              name="close"
+              size={36}
+              color="#4775f2"
+              style={{marginTop: -2}}
+            />
+          </CloseView>
         </TouchableOpacity>
         <ScrollView>
-        <Content>
-        <ListView
-           dataSource={this.state.data}
-           renderRow={(rowData)=>this.renderRow(rowData)}
-         >
-           </ListView>
-        <Text>This is a test!!!!</Text>
-        </Content>
+          <Content>
+            <View>
+              <FlatList
+                data={this.state.data}
+                renderItem={({item}) => (
+                  <View>
+                    <Text>{item.routeIntro}</Text>
+                    
+                  </View>
+                )}
+              />
+            </View>
+          </Content>
         </ScrollView>
-          <Text>This is a test!!!!</Text>*/}
+        <Text>This is a test!!!!</Text>
       </Container>
     );
   }
 }
 
+/*
+<View>
+          <FlatList data ={this.state.data} renderItem={({item}) =>
+          <View>
+            <Text>{item.username}</Text>
+            </View>
+        } />
+        </View>*/
+
 export default SectionScreen;
 
 const Content = styled.View`
-height: 100%;
+  height: 100%;
 `;
 
-const htmlContent = 
-` 
-  <h2> This is a title </h2>
-  <p> <strong>This is a <a href= "http://www.baidu.com">link</a></p>
-`
 const Container = styled.View`
   flex: 1;
 `;
@@ -160,7 +173,7 @@ const Logo = styled.Image`
 const Subtitle = styled.Text`
   font-size: 15px;
   font-weight: 600;
-  color: rgba(255,255,255,0.8);
+  color: rgba(255, 255, 255, 0.8);
   margin-left: 5px;
   text-transform: uppercase;
 `;

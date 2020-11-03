@@ -35,12 +35,29 @@ class ClassifyScreen extends React.Component {
   }
   state = {
     scale: new Animated.Value(1),
+    routeData:null
   };
 
+  fetchData(){
+    var url = 'http://172.20.10.10:4545/Volumes/OVERAINY/Github/Travel-App/Frontend/AwesomeProject';
+    fetch(url)
+        .then((res)=> res.json())//转化为json
+        .then((json)=>{
+            this.setState({data:json});//将json数据传递出去，setState会重新调用render()
+            console.log(this.state.data);
+
+        })
+        .catch((e)=>{
+            alert(e);
+        });
+  }
+
+  componentDidMount(){
+    this.fetchData()
+  }
  
   componentDidUpdate(){
-    this.toggleMenu(),
-    this.fetchData()
+    this.toggleMenu()
   }
 
   toggleMenu = () =>{
@@ -110,13 +127,16 @@ class ClassifyScreen extends React.Component {
                   //passing data
                 })
               }}>
-              <Card 
-                title={card.title}
+              <FlatList data ={this.state.data} keyExtractor={(item, index) => index.toString()} renderItem={({item}) =>
+                   <Card 
+                title={item.username}
                 image={card.image}
                 caption={card.caption}
                 subtitle={card.subtitle}
               />
-              </TouchableOpacity>
+                   } />
+             
+            </TouchableOpacity>
             ))}
           </ScrollView>
         </ScrollView>
