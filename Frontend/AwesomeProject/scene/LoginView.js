@@ -8,12 +8,14 @@ import TabNavigator from "../Navigator/TabNavigator";
 import {createBottomTabNavigator} from "react-navigation-tabs";
 import {createStackNavigator} from 'react-navigation-stack'
 import ClassifyScreen from "./ClassifyScreen";
+import Axios from "axios"
 //import { response } from "express";
 
 
 export default class LoginView extends Component{
   username = '';
   password = '';
+
   
   onUsernameChanged = (newUsername) => {
     this.username = newUsername;
@@ -25,12 +27,25 @@ export default class LoginView extends Component{
 
   //登陆跳转
   login = () => {
-    if (this.username == 'admin' && this.password == '123') {
+    var url = 'http://192.168.1.108:3000/login';//ip地址在变化，要注意
+    Axios.post(url ,{
+      username: this.username, 
+      passwd: this.password,
+    }).then((response) => {
+      if(response.data.message){
+        ToastAndroid.show('wrong username/password combination!',ToastAndroid.SHORT);
+      } else{
+        this.props.navigation.replace("Tab")
+        ToastAndroid.show('登录成功',ToastAndroid.SHORT);
+      }
+      console.log(response);
+    });
+    /*if (this.username == 'admin' && this.password == '123') {
       this.props.navigation.replace("Tab")
       ToastAndroid.show('登录成功',ToastAndroid.SHORT);
     } else {
-      ToastAndroid.show('登录失败',ToastAndroid.SHORT);
-    }
+      ToastAndroid.show('wrong username/password combination!',ToastAndroid.SHORT);
+    }*/
     /*fetch('', {
 
     }).then((response) => response.json())

@@ -12,7 +12,6 @@ app.listen(8880);*/
 var express = require("express");
 var app = express();
 
-
 var mysql = require("mysql");
 var bodyParser = require("body-parser");
 
@@ -29,7 +28,7 @@ var con = mysql.createConnection({
 
 //create listen
 
-var server = app.listen(8888, function () {
+var server = app.listen(3000, function () {
   var host = server.address().address;
   var port = server.address().port;
 });
@@ -40,10 +39,9 @@ con.connect(function (error) {
 });
 
 app.post("/register", (req, res) => {
-
   const username = req.body.username;
   const passwd = req.body.passwd;
-
+  console.log(username);
   con.query(
     "INSERT INTO Users (username, passwd) VALUES (?,?)",
     [username, passwd],
@@ -53,8 +51,28 @@ app.post("/register", (req, res) => {
   );
 });
 
+app.post("/login", (req, res) => {
+  const username = req.body.username;
+  const passwd = req.body.passwd;
+  console.log(username);
+  con.query(
+    "SELECT * FROM Users WHERE username = ? AND passwd = ?",
+    [username, passwd],
+    (err, result) => {
+      if (err) {
+        res.send({ err: err });
+      }
+      if (result.length > 0) {
+        res.send(result);
+      } else {
+        res.send({ message: "Wrong username/password conbination!" });
+      }
+    }
+  );
+});
+
 app.get("/route", function (req, res) {
-  con.query("select * from Route", function (error, rows, fields) {
+  con.query("select * from Users", function (error, rows, fields) {
     if (error) console.log(error);
     else {
       console.log(rows);

@@ -31,7 +31,7 @@ class SectionScreen extends React.Component {
   }*/
   fetchData() {
     var url =
-      'http://172.20.10.10:8888/route';
+      'http://172.20.10.10:3000/route';
     fetch(url)
       .then((res) => res.json()) //转化为json
       .then((json) => {
