@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import { Button, Text, View, Image, StyleSheet, TouchableOpacity, ToastAndroid, TextInput} from "react-native";
 //ios端提醒直接用Alert
 
-import Home from './Home'
+import Home from './Home';
+import Axios from 'axios';
+//import { response } from "express";
+
 
 
 
@@ -10,7 +13,7 @@ export default class SignUpView extends Component{
   username = '';
   password = '';
   repassword = '';
-  
+
   onUsernameChanged = (newUsername) => {
     this.username = newUsername;
   };
@@ -26,6 +29,16 @@ export default class SignUpView extends Component{
   Register = () =>{
     //检查用户名是否可用/两次密码是否一致
     if (this.repassword == this.password) {
+
+      
+      var url = 'http://172.20.10.10:8888/register';
+      Axios.post(url ,{
+      username: this.username,
+      passwd: this.password,
+    }).then((response) => {
+      console.log(response);
+    });
+
       ToastAndroid.show('注册成功',ToastAndroid.SHORT);
       this.props.navigation.pop()
     } else{

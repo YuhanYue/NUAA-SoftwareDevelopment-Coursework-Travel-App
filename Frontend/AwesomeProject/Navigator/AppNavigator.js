@@ -52,8 +52,8 @@ import SignUpView from '../scene/SignUpView'
 const AppNavigator = createStackNavigator(
   {
     
-    //Login: LoginView,
-    //SignUp: SignUpView,
+    Login: LoginView,
+    SignUp: SignUpView,
     Tab:TabNavigator
     //Section: SectionScreen
   },

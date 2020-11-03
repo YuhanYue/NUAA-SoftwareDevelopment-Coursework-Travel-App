@@ -39,7 +39,7 @@ class ClassifyScreen extends React.Component {
   };
 
   fetchData(){
-    var url = 'http://172.20.10.10:4545/Volumes/OVERAINY/Github/Travel-App/Frontend/AwesomeProject';
+    var url = 'http://172.20.10.10:8888/route';
     fetch(url)
         .then((res)=> res.json())//转化为json
         .then((json)=>{
@@ -129,12 +129,12 @@ class ClassifyScreen extends React.Component {
               }}>
               <FlatList data ={this.state.data} keyExtractor={(item, index) => index.toString()} renderItem={({item}) =>
                    <Card 
-                title={item.username}
+                title={item.routeName}
                 image={card.image}
                 caption={card.caption}
                 subtitle={card.subtitle}
               />
-                   } />
+                }/>
              
             </TouchableOpacity>
             ))}

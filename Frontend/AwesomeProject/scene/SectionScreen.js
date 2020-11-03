@@ -31,7 +31,7 @@ class SectionScreen extends React.Component {
   }*/
   fetchData() {
     var url =
-      'http://172.20.10.10:4545/Volumes/OVERAINY/Github/Travel-App/Frontend/AwesomeProject';
+      'http://172.20.10.10:8888/route';
     fetch(url)
       .then((res) => res.json()) //转化为json
       .then((json) => {
@@ -55,13 +55,8 @@ class SectionScreen extends React.Component {
     return (
       <Container>
         <StatusBar hidden />
-        <View>
-          <FlatList
-            data={this.state.data}
-            renderItem={this.renderItemView}></FlatList>
-        </View>
         <Cover>
-          <Image source={section.image} />
+           <Image source={section.image} />
           <Wrapper>
             <Logo source={section.logo} />
             <Subtitle source={section.subtitle} />
@@ -86,8 +81,7 @@ class SectionScreen extends React.Component {
                 data={this.state.data}
                 renderItem={({item}) => (
                   <View>
-                    <Text>{item.routeIntro}</Text>
-                    
+                    <Text>{item.routeIntro}</Text> 
                   </View>
                 )}
               />
