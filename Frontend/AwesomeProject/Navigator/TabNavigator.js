@@ -59,7 +59,7 @@ ClassifyStack.navigationOptions = ({ navigation }) => {
 
   var tabBarVisible = true;
   const routeName = navigation.state.routes[navigation.state.index].routeName;
-
+  const username = navigation.state.params.username;
   //hide tabBar
   if(routeName == "Section"){
     tabBarVisible = false;
@@ -67,7 +67,7 @@ ClassifyStack.navigationOptions = ({ navigation }) => {
   return {
     tabBarVisible,
     tabBarLabel: "Home",
-
+    
     tabBarIcon: ({ focused }) => (
       <Icon name="Close" size={30} color={
         focused ? activeColor : inactiveColor} 
@@ -82,10 +82,13 @@ const TabNavigator = createBottomTabNavigator({
   HomeStack,
 });
 
-TabNavigator.navigation = ({navigation}) => {
-  const username = navigation.getParam('username');
-  console.JSON.stringify(username);
-}
+TabNavigator.navigationOptions = ({ navigation}) =>{
+  //const username = this.props.navigation.state.params.username;
+  //username: navigation.state.params.username;
+  //const username = navigation.getParam(username);
+ };
+
+
 
 
 export default TabNavigator;

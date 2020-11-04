@@ -13,6 +13,7 @@ import Axios from "axios";
 
 
 
+
 export default class LoginView extends Component{
   username = '';
   password = '';
@@ -37,10 +38,10 @@ export default class LoginView extends Component{
         ToastAndroid.show('wrong username/password combination!',ToastAndroid.SHORT);
       } else{
         this.props.navigation.replace("Tab",{username:this.username});
-        console.log(username);
+        //.log(username);
         ToastAndroid.show('登录成功',ToastAndroid.SHORT);
       }
-      console.log(response);
+      //console.log(response);
     });
     /*if (this.username == 'admin' && this.password == '123') {
       this.props.navigation.replace("Tab")
@@ -58,7 +59,7 @@ export default class LoginView extends Component{
         console.error(error);
       });*/
   };
-
+  
   //注册跳转
   SignUp = ()=>{
     this.props.navigation.push("SignUp")

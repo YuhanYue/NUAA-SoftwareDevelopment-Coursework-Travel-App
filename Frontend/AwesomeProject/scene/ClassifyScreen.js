@@ -13,6 +13,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Logo from '../components/Logo';
 import Menu from '../components/Menu';
 import { FlatList } from 'react-native-gesture-handler';
+//import information from  '../Global';
 
 function mapStateToProps(state)  {
   return {action: state.action};
@@ -48,7 +49,7 @@ class ClassifyScreen extends React.Component {
   state = {
     scale: new Animated.Value(1),
     routeData:null,
-    username: null
+    username: 'yuhan'
     
   };
 
@@ -59,8 +60,6 @@ class ClassifyScreen extends React.Component {
         .then((res)=> res.json())//转化为json
         .then((json)=>{
             this.setState({routeData:json});//将json数据传递出去，setState会重新调用render()
-            //console.log(this.state.routeData);
-            //console.log(username);
 
         })
         .catch((e)=>{
@@ -69,11 +68,8 @@ class ClassifyScreen extends React.Component {
   }
 
   componentDidMount(){
-    
     this.fetchData();
-    const {navigation} = this.props;
-    const username = navigation.getParam('username');
-    //console.log(JSON.stringify(username));
+    
   }
  
   componentDidUpdate(){
@@ -91,7 +87,7 @@ class ClassifyScreen extends React.Component {
 
 
   render() {
-    const {navigation} = this.props;
+    //const {navigation} = this.props;
 
     return ( 
       <AnimatedContainer>
@@ -144,7 +140,8 @@ class ClassifyScreen extends React.Component {
             {cards.map((card, index) => (
               <TouchableOpacity key={index} onPress = {() => {
                 this.props.navigation.push("Section", {
-                  section: card
+                  section: card,
+                  username: this.state.username
                   //passing data
                 })
               }}>

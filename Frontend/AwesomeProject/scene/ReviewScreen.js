@@ -34,8 +34,8 @@ export default class ReviewScreen extends Component {
         <FlatList
           data={this.state.review}
           renderItem={({item}) => (
-            <View style={{backgroundColor:'#abc123', padding: 10, margin: 10}}>
-              <Text styel= {{ color:'#ffffff', fontWeight:'bold'}}>{item.reviewID}</Text>
+            <View style={{backgroundColor:'abc123', padding: 10, margin: 10}}>
+              <Text styel= {{ color:'#fff', fontWeight:'bold'}}>{item.reviewID}</Text>
             </View>
           )}
         />

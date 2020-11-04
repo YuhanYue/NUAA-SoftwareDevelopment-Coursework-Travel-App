@@ -18,6 +18,7 @@ class SectionScreen extends React.Component {
     heeder: null,
   };
 
+  username = '';
   constructor(props) {
     super(props);
     this.state = {
@@ -61,10 +62,11 @@ class SectionScreen extends React.Component {
     var url = 'http://172.20.10.10:3000/order';//ip地址在变化，要注意
     Axios.post(url ,{
       username: this.username, 
+      routeID: '1',
       //routeID: this.routeID,
     }).then((response) => {
       console.log(response);
-      console.log(username);
+      //console.log(username);
     });
   }
 
@@ -73,6 +75,8 @@ class SectionScreen extends React.Component {
     //recieve data
     const {navigation} = this.props;
     const section = navigation.getParam('section');
+    this.username = navigation.getParam('username');
+    //this.setState({username: username});
     return (
       <Container>
         <StatusBar hidden />

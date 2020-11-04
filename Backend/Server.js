@@ -33,31 +33,23 @@ var server = app.listen(3000, function () {
   var port = server.address().port;
 });
 
+
+
 con.connect(function (error) {
   if (error) console.log(error);
   else console.log("connected");
 });
 
 
-//register 
-app.post("/register", (req, res) => {
-  const username = req.body.username;
-  const passwd = req.body.passwd;
-  console.log(username);
-  con.query(
-    "INSERT INTO Users (username, passwd) VALUES (?,?)",
-    [username, passwd],
-    (err, result) => {
-      console.log(err);
-    }
-  );
-});
+
 
 //login
 app.post("/login", (req, res) => {
   const username = req.body.username;
   const passwd = req.body.passwd;
-  console.log(username);
+  
+  
+  //console.log(username);
   con.query(
     "SELECT * FROM Users WHERE username = ? AND passwd = ?",
     [username, passwd],
@@ -76,6 +68,7 @@ app.post("/login", (req, res) => {
 
 //get review for a route
 app.get("/review", function(req, res){
+  
   con.query("SELECT * FROM Review",
   (err, result) =>{
     if(err){
@@ -90,24 +83,38 @@ app.get("/review", function(req, res){
   );
 });
 
-//order a route
+//order
 app.post("/order", (req, res) => {
-  
+  const username = req.body.username;
   con.query(
-    "INSERT INTO Order (username) VALUES (?) ",//orderID自增
-    [uername],
+    "INSERT INTO `TravelApp`.`Order` ( `username`) VALUES ( ?);",
+    [username],
+    (err, result) => {
+      console.log(err);
+      console.log(username);
+    }
+  );
+});
+
+//register 
+app.post("/register", (req, res) => {
+  const username = req.body.username;
+  const passwd = req.body.passwd;
+  //console.log(username);
+  con.query(
+    "INSERT INTO Users (username, passwd) VALUES (?,?)",
+    [username, passwd],
     (err, result) => {
       console.log(err);
     }
   );
 });
 
-
 app.get("/route", function (req, res) {
   con.query("select * from Route", function (error, rows, fields) {
     if (error) console.log(error);
     else {
-      console.log(rows);
+      //console.log(rows);
       res.send(rows);
     }
   });
