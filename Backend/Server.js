@@ -38,6 +38,8 @@ con.connect(function (error) {
   else console.log("connected");
 });
 
+
+//register 
 app.post("/register", (req, res) => {
   const username = req.body.username;
   const passwd = req.body.passwd;
@@ -51,6 +53,7 @@ app.post("/register", (req, res) => {
   );
 });
 
+//login
 app.post("/login", (req, res) => {
   const username = req.body.username;
   const passwd = req.body.passwd;
@@ -71,8 +74,37 @@ app.post("/login", (req, res) => {
   );
 });
 
+//get review for a route
+app.get("/review", function(req, res){
+  con.query("SELECT * FROM Review",
+  (err, result) =>{
+    if(err){
+      res.send({err: err});
+    }
+    if(result.length > 0){
+      res.send(result);
+    } else{
+      res.send({message: "No review for this route yet!"});
+    }
+  }
+  );
+});
+
+//order a route
+app.post("/order", (req, res) => {
+  
+  con.query(
+    "INSERT INTO Order (username) VALUES (?) ",//orderID自增
+    [uername],
+    (err, result) => {
+      console.log(err);
+    }
+  );
+});
+
+
 app.get("/route", function (req, res) {
-  con.query("select * from Users", function (error, rows, fields) {
+  con.query("select * from Route", function (error, rows, fields) {
     if (error) console.log(error);
     else {
       console.log(rows);

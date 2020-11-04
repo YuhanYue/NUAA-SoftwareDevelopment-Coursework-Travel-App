@@ -54,8 +54,8 @@ const AppNavigator = createStackNavigator(
     
     Login: LoginView,
     SignUp: SignUpView,
-    Tab:TabNavigator
-    //Section: SectionScreen
+    Tab:TabNavigator,
+    Classify:ClassifyScreen
   },
   {
     mode: "modal"

@@ -1,5 +1,5 @@
 //分类的数据，
-
+//登陆后的username怎么传进来？
 import React from 'react';
 import {ScrollView, TouchableOpacity, Animated, Easing, View} from 'react-native';
 import Card from '../components/Card';
@@ -30,21 +30,37 @@ function mapDispatchToProps(dispatch){
 
 class ClassifyScreen extends React.Component {
 
+  constructor(props) {
+    super(props);
+    //this.username = navigation.getParam('username');
+  }
+
+  
+  static navigationOptions = ({navigation}) => {
+      title:"Home"
+      //title : navigation.getParam('otherParam', 'no-values'),
+}
+
+/*
   static navigationOptions = {
     title: "Home"
-  }
+  }*/
   state = {
     scale: new Animated.Value(1),
-    routeData:null
+    routeData:null,
+    username: null
+    
   };
 
   fetchData(){
+    
     var url = 'http://172.20.10.10:3000/route';
     fetch(url)
         .then((res)=> res.json())//转化为json
         .then((json)=>{
-            this.setState({data:json});//将json数据传递出去，setState会重新调用render()
-            console.log(this.state.data);
+            this.setState({routeData:json});//将json数据传递出去，setState会重新调用render()
+            //console.log(this.state.routeData);
+            //console.log(username);
 
         })
         .catch((e)=>{
@@ -53,7 +69,11 @@ class ClassifyScreen extends React.Component {
   }
 
   componentDidMount(){
-    this.fetchData()
+    
+    this.fetchData();
+    const {navigation} = this.props;
+    const username = navigation.getParam('username');
+    //console.log(JSON.stringify(username));
   }
  
   componentDidUpdate(){
@@ -71,7 +91,9 @@ class ClassifyScreen extends React.Component {
 
 
   render() {
-    return (
+    const {navigation} = this.props;
+
+    return ( 
       <AnimatedContainer>
         <Menu />
         <ScrollView style={{height: '100%'}}>
@@ -99,7 +121,6 @@ class ClassifyScreen extends React.Component {
             }}
             horizontal={true}
             showsHorizontalScrollIndicator={false}>
-        
             {logos.map((logo, index) => (
               <TouchableOpacity 
               onPress = { () => {this.props.navigation.push("Home")}}>
@@ -127,7 +148,7 @@ class ClassifyScreen extends React.Component {
                   //passing data
                 })
               }}>
-              <FlatList data ={this.state.data} keyExtractor={(item, index) => index.toString()} renderItem={({item}) =>
+              <FlatList data ={this.state.routeData} keyExtractor={(item, index) => index.toString()} renderItem={({item}) =>
                    <Card 
                 title={item.routeName}
                 image={card.image}

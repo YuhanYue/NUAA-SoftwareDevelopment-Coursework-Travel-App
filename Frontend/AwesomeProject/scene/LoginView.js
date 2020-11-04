@@ -8,8 +8,9 @@ import TabNavigator from "../Navigator/TabNavigator";
 import {createBottomTabNavigator} from "react-navigation-tabs";
 import {createStackNavigator} from 'react-navigation-stack'
 import ClassifyScreen from "./ClassifyScreen";
-import Axios from "axios"
+import Axios from "axios";
 //import { response } from "express";
+
 
 
 export default class LoginView extends Component{
@@ -27,7 +28,7 @@ export default class LoginView extends Component{
 
   //登陆跳转
   login = () => {
-    var url = 'http://192.168.1.108:3000/login';//ip地址在变化，要注意
+    var url = 'http://172.20.10.10:3000/login';//ip地址在变化，要注意
     Axios.post(url ,{
       username: this.username, 
       passwd: this.password,
@@ -35,7 +36,8 @@ export default class LoginView extends Component{
       if(response.data.message){
         ToastAndroid.show('wrong username/password combination!',ToastAndroid.SHORT);
       } else{
-        this.props.navigation.replace("Tab")
+        this.props.navigation.replace("Tab",{username:this.username});
+        console.log(username);
         ToastAndroid.show('登录成功',ToastAndroid.SHORT);
       }
       console.log(response);

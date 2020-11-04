@@ -9,6 +9,8 @@ import Home from '../scene/Home';
 import ClassfiyScreen from '../scene/ClassifyScreen'
 import SectionScreen from '../scene/SectionScreen'
 import LoginView from "../scene/LoginView";
+import ReviewScreen from "../scene/ReviewScreen";
+import { renderToStringWithData } from "react-apollo";
 
 
 
@@ -19,15 +21,18 @@ const inactiveColor = "#b8bece";
 const HomeStack = createStackNavigator(
   {
     Home: Home,
+    Review: ReviewScreen
   }
 );
 
 HomeStack.navigationOptions = ({ navigation }) => {
+
   var tabBarVisible = true;//by default
   const routeName = navigation.state.routes[navigation.state.index].routeName;
 
   
   return {
+    
     tabBarVisible,
     tabBarLabel: "Explore",
 
@@ -44,12 +49,14 @@ const ClassifyStack= createStackNavigator(
   {
     Classify: ClassfiyScreen,
     Section: SectionScreen,
-    Origin: Home
+    Home: Home,
+    Review: ReviewScreen
   }
 );
 
 
 ClassifyStack.navigationOptions = ({ navigation }) => {
+
   var tabBarVisible = true;
   const routeName = navigation.state.routes[navigation.state.index].routeName;
 
@@ -70,13 +77,16 @@ ClassifyStack.navigationOptions = ({ navigation }) => {
 };
 
 
-
-
-
 const TabNavigator = createBottomTabNavigator({
   ClassifyStack,
   HomeStack,
 });
+
+TabNavigator.navigation = ({navigation}) => {
+  const username = navigation.getParam('username');
+  console.JSON.stringify(username);
+}
+
 
 export default TabNavigator;
 

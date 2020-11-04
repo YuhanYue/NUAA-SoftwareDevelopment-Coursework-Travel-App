@@ -25,6 +25,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
+
 class Menu extends React.Component {
   state = {
     top: new Animated.Value(screeHeight),
@@ -79,14 +80,22 @@ class Menu extends React.Component {
           </CloseView>
         </TouchableOpacity>
         <Content>
-          {items.map((item, index) => (
-            <MenuItem
-              key={index}
-              icon={item.icon}
-              title={item.title}
-              text={item.text}
+          
+            <TouchableOpacity>
+              <MenuItem
+              title={'My Orders'}
+              text={'view and manage all of your previous orders'}
             />
-          ))}
+            </TouchableOpacity>
+
+            <TouchableOpacity>
+              <MenuItem
+              title={'My Reviews'}
+              text={'view and manage all of your comments'}
+            />
+            </TouchableOpacity>
+
+          
         </Content>
       </AnimatedContainer>
     );
