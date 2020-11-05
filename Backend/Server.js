@@ -87,11 +87,11 @@ app.get("/review", function(req, res){
 app.post("/order", (req, res) => {
   const username = req.body.username;
   con.query(
-    "INSERT INTO `TravelApp`.`Order` ( `username`) VALUES ( ?);",
+    " INSERT INTO `TravelApp`.`Order` ( `username`) VALUES ( ?)",
     [username],
     (err, result) => {
       console.log(err);
-      console.log(username);
+      //console.log(username);
     }
   );
 });
@@ -109,6 +109,32 @@ app.post("/register", (req, res) => {
     }
   );
 });
+
+//add favorite
+app.post("/favorite", (req, res) => {
+  const username = req.body.username;
+  con.query(
+    " INSERT INTO Collection ( `username`) VALUES ( ?)",
+    [username],
+    (err, result) => {
+      console.log(err);
+      console.log(err);
+    }
+  );
+
+  app.post("/cancelFavorite", (req, res) => {
+    const username = req.body.username;
+    //console.log(username);
+    con.query(
+      "DELETE FROM Collection WHERE (`username` =?)",
+      [username],
+      (err, result) => {
+        console.log(err);
+      }
+    );
+  });
+});
+
 
 app.get("/route", function (req, res) {
   con.query("select * from Route", function (error, rows, fields) {

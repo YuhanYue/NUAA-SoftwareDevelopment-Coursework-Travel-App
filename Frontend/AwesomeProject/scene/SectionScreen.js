@@ -13,16 +13,24 @@ import Axios from "axios";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {FlatList, ScrollView, ListView} from 'react-native-gesture-handler';
 
+
+
+const activeColor = "#F6BF1C";
+const inactiveColor = "#E6E8EB";
+
+
+
 class SectionScreen extends React.Component {
   static navigationOptions = {
     heeder: null,
   };
 
-  username = '';
   constructor(props) {
     super(props);
     this.state = {
       data: null,
+      username: 'yuhan',
+      isFavorite: false,
     };
   }
   //setState会重新调用render()
@@ -41,7 +49,7 @@ class SectionScreen extends React.Component {
 
   
   fetchData() {
-    var url = 'http://172.20.10.10:3000/route';
+    var url = 'http://192.168.1.101:3000/route';
     fetch(url)
       .then((res) => res.json()) //转化为json
       .then((json) => {
@@ -59,23 +67,53 @@ class SectionScreen extends React.Component {
   }
 
   Order = () =>{
-    var url = 'http://172.20.10.10:3000/order';//ip地址在变化，要注意
+    var url = 'http://192.168.1.101:3000/order';//ip地址在变化，要注意
     Axios.post(url ,{
-      username: this.username, 
+      username: this.state.username, 
       routeID: '1',
       //routeID: this.routeID,
     }).then((response) => {
-      console.log(response);
+      //console.log(response);
+      //ToastAndroid.show('预定成功！',ToastAndroid.SHORT);
       //console.log(username);
     });
   }
+ß
+  addFavorite = () => {
+    if (this.state.isFavorite){//已经添加喜欢
+      this.setState({ isFavorite: false});
+      //取消收藏
+      var url = 'http://192.168.1.101:3000/cancelFavorite';
+      Axios.post(url ,{
+      username: this.state.username, 
+      routeID: '1',
+      //routeID: this.routeID,
+    }).then((response) => {
+      //console.log(response);
+      //ToastAndroid.show('预定成功！',ToastAndroid.SHORT);
+      //ßconsole.log(username);
+    });
+    } else{//没添加到喜欢,则添加喜欢
+      this.setState({ isFavorite: true});
+      var url = 'http://192.168.1.101:3000/favorite';
+    Axios.post(url ,{
+      username: this.state.username, 
+      routeID: '1',
+      //routeID: this.routeID,
+    }).then((response) => {
+      //console.log(response);
+      //ToastAndroid.show('预定成功！',ToastAndroid.SHORT);
+      //ßconsole.log(username);
+    });
 
-
+    }
+    
+  }
   render() {
     //recieve data
     const {navigation} = this.props;
     const section = navigation.getParam('section');
-    this.username = navigation.getParam('username');
+    //this.username = navigation.getParam('username');
     //this.setState({username: username});
     return (
       <Container>
@@ -89,13 +127,15 @@ class SectionScreen extends React.Component {
           <Title>{section.title}</Title>
           <Caption>{section.caption}</Caption>
         </Cover>
-        <TouchableOpacity style={{position: 'absolute', top: 20, right: 20}}>
+        <TouchableOpacity style={{position: 'absolute', top: 20, right: 20}
+        } onPress = {this.addFavorite}>
           <CloseView>
             <Icon
-              name="close"
+              name="star"
               size={36}
-              color="#4775f2"
-              style={{marginTop: -2}}
+              color={inactiveColor}
+              
+              //style={{marginTop: -2}}
             />
           </CloseView>
         </TouchableOpacity>
@@ -121,6 +161,10 @@ class SectionScreen extends React.Component {
           <TouchableOpacity style={styles.btnStyle}
             onPress = { () => { this.props.navigation.push("Review")}}>
             <Text>查看评论</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.btnStyle}
+          onPress = {this.Order}>
+            <Text>添加评论</Text>
           </TouchableOpacity>
         </View>
       </Container>
@@ -205,6 +249,8 @@ const Subtitle = styled.Text`
   margin-left: 5px;
   text-transform: uppercase;
 `;
+
+
 
 const styles = StyleSheet.create({
   btnStyle_order: {

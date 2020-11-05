@@ -8,15 +8,40 @@ import Home from '../scene/Home';
 //import MineScene from '../scene/MineScene'
 import ClassfiyScreen from '../scene/ClassifyScreen'
 import SectionScreen from '../scene/SectionScreen'
-import LoginView from "../scene/LoginView";
 import ReviewScreen from "../scene/ReviewScreen";
 import { renderToStringWithData } from "react-apollo";
-
+import SearchBar from "../scene/SearchBar"
 
 
 const activeColor = "#4775f2";
 const inactiveColor = "#b8bece";
 
+
+
+const SearchStack = createStackNavigator(
+  {
+    Search:SearchBar,
+    Section: SectionScreen
+  }
+);
+
+SearchStack.navigationOptions = ({ navigation }) => {
+
+  var tabBarVisible = true;//by default
+  const routeName = navigation.state.routes[navigation.state.index].routeName;
+  
+  return {
+    
+    tabBarVisible,
+    tabBarLabel: "Search",
+
+    tabBarIcon: ({ focused }) => (
+      <Icon name="Close" size={30} color={
+        focused ? activeColor : inactiveColor} 
+        />
+    )
+  };
+};
 
 const HomeStack = createStackNavigator(
   {
@@ -24,6 +49,7 @@ const HomeStack = createStackNavigator(
     Review: ReviewScreen
   }
 );
+
 
 HomeStack.navigationOptions = ({ navigation }) => {
 
@@ -59,7 +85,7 @@ ClassifyStack.navigationOptions = ({ navigation }) => {
 
   var tabBarVisible = true;
   const routeName = navigation.state.routes[navigation.state.index].routeName;
-  const username = navigation.state.params.username;
+  //const username = navigation.state.params.username;
   //hide tabBar
   if(routeName == "Section"){
     tabBarVisible = false;
@@ -80,13 +106,8 @@ ClassifyStack.navigationOptions = ({ navigation }) => {
 const TabNavigator = createBottomTabNavigator({
   ClassifyStack,
   HomeStack,
+  SearchStack
 });
-
-TabNavigator.navigationOptions = ({ navigation}) =>{
-  //const username = this.props.navigation.state.params.username;
-  //username: navigation.state.params.username;
-  //const username = navigation.getParam(username);
- };
 
 
 

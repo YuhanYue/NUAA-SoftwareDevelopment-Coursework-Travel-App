@@ -5,6 +5,7 @@ import {PanResponder, Animated} from 'react-native';
 import styled from 'styled-components';
 import TravelRoute from '../components/TavelRoute';
 import {connect} from 'react-redux';
+import SearchBar from './SearchBar';
 
 function mapStateToProps(state) {
   return {
@@ -97,6 +98,7 @@ class Home extends React.Component {
   render() {
     return (
       <Container>
+        {/*<SearchBar />*/}
         <AnimatedMask style={{opacity: this.state.opacity}} />
         <Animated.View
           style={{

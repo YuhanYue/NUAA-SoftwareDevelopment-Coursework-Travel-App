@@ -95,6 +95,14 @@ class Menu extends React.Component {
             />
             </TouchableOpacity>
 
+            <TouchableOpacity>
+              <MenuItem
+              title={'My Favorites'}
+              text={'view routes you have collected'}
+            />
+            </TouchableOpacity>
+
+
           
         </Content>
       </AnimatedContainer>

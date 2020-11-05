@@ -10,7 +10,7 @@ export default class ReviewScreen extends Component {
   }
 
   fetchData() {
-    var url = 'http://172.20.10.10:3000/review';
+    var url = 'http://192.168.1.101:3000/review';
     fetch(url)
       .then((res) => res.json()) //转化为json
       .then((json) => {
