@@ -2,12 +2,6 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, FlatList} from 'react-native';
 
 export default class ReviewScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      review: null,
-    };
-  }
 
   fetchData() {
     var url = 'http://192.168.1.101:3000/review';

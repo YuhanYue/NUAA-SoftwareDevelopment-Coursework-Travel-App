@@ -7,11 +7,13 @@ import {
   Text,
   View,
   StyleSheet,
+  Alert
 } from 'react-native';
 import Axios from "axios";
 
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {FlatList, ScrollView, ListView} from 'react-native-gesture-handler';
+import {FlatList, ScrollView, ListView, TextInput} from 'react-native-gesture-handler';
+//ßimport reviewInput from ('../components/reviewInput')
 
 
 
@@ -157,14 +159,21 @@ class SectionScreen extends React.Component {
           <TouchableOpacity style={styles.btnStyle}
           onPress = {this.Order}>
             <Text>立即预定</Text>
+          </TouchableOpacity> 
+          <TouchableOpacity style={styles.btnStyle}
+          //onPoress = 
+           /*onPress={() => Alert.alert(
+            '请输入你的评论：',
+            alertMessage,
+            [
+              {text: 'OK', onPress: () => console.log('OK Pressed!')},
+            ]*/
+          >
+            <Text>添加评论</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.btnStyle}
             onPress = { () => { this.props.navigation.push("Review")}}>
             <Text>查看评论</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.btnStyle}
-          onPress = {this.Order}>
-            <Text>添加评论</Text>
           </TouchableOpacity>
         </View>
       </Container>
