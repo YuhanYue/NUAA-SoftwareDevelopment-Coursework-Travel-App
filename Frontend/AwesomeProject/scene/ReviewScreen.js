@@ -3,8 +3,15 @@ import {StyleSheet, Text, View, FlatList} from 'react-native';
 
 export default class ReviewScreen extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      review: ''
+    }
+  }
+
   fetchData() {
-    var url = 'http://192.168.1.101:3000/review';
+    var url = 'http://192.168.1.106:3000/review';
     fetch(url)
       .then((res) => res.json()) //转化为json
       .then((json) => {

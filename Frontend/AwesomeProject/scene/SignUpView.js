@@ -29,7 +29,7 @@ export default class SignUpView extends Component{
   Register = () =>{
     //检查用户名是否可用/两次密码是否一致
     if (this.repassword == this.password) {
-      var url = 'http://172.20.10.10:3000/register';//ip地址在变化，要注意
+      var url = 'http://192.168.1.106:3000/register';//ip地址在变化，要注意
       Axios.post(url ,{
       username: this.username, 
       passwd: this.password,

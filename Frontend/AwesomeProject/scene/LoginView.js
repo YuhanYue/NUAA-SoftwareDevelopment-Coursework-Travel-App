@@ -6,7 +6,7 @@ import HomeScene from './Home'
 import SignUpView from './SignUpView'
 import TabNavigator from "../Navigator/TabNavigator";
 import {createBottomTabNavigator} from "react-navigation-tabs";
-import {createStackNavigator} from 'react-navigation-stack'
+//import {createStackNavigator} from 'react-navigation-stack'
 import ClassifyScreen from "./ClassifyScreen";
 import Axios from "axios";
 //import { response } from "express";
@@ -29,7 +29,7 @@ export default class LoginView extends Component{
 
   //登陆跳转
   login = () => {
-    var url = 'http://192.168.1.101:3000/login';//ip地址在变化，要注意
+    var url = 'http://192.168.1.106:3000/login';//ip地址在变化，要注意
     Axios.post(url ,{
       username: this.username, 
       passwd: this.password,

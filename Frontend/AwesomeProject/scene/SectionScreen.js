@@ -50,8 +50,13 @@ class SectionScreen extends React.Component {
   }*/
 
   
+  componentDidMount() {
+    this.fetchData();
+    //console.log(this.state.data);
+  }
+
   fetchData() {
-    var url = 'http://192.168.1.101:3000/route';
+    var url = 'http://192.168.1.106:3000/route';
     fetch(url)
       .then((res) => res.json()) //转化为json
       .then((json) => {
@@ -63,13 +68,9 @@ class SectionScreen extends React.Component {
       });
   }
 
-  componentDidMount() {
-    this.fetchData();
-    //console.log(this.state.data);
-  }
-
+  
   Order = () =>{
-    var url = 'http://192.168.1.101:3000/order';//ip地址在变化，要注意
+    var url = 'http://192.168.1.106:3000/order';//ip地址在变化，要注意
     Axios.post(url ,{
       username: this.state.username, 
       routeID: '1',
@@ -85,7 +86,7 @@ class SectionScreen extends React.Component {
     if (this.state.isFavorite){//已经添加喜欢
       this.setState({ isFavorite: false});
       //取消收藏
-      var url = 'http://192.168.1.101:3000/cancelFavorite';
+      var url = 'http://192.168.1.106:3000/cancelFavorite';
       Axios.post(url ,{
       username: this.state.username, 
       routeID: '1',
@@ -97,7 +98,7 @@ class SectionScreen extends React.Component {
     });
     } else{//没添加到喜欢,则添加喜欢
       this.setState({ isFavorite: true});
-      var url = 'http://192.168.1.101:3000/favorite';
+      var url = 'http://192.168.1.106:3000/favorite';
     Axios.post(url ,{
       username: this.state.username, 
       routeID: '1',
@@ -155,27 +156,24 @@ class SectionScreen extends React.Component {
             </View>
           </Content>
         </ScrollView>
+
         <View style={styles.canNot}>
           <TouchableOpacity style={styles.btnStyle}
           onPress = {this.Order}>
             <Text>立即预定</Text>
           </TouchableOpacity> 
+         
           <TouchableOpacity style={styles.btnStyle}
-          //onPoress = 
-           /*onPress={() => Alert.alert(
-            '请输入你的评论：',
-            alertMessage,
-            [
-              {text: 'OK', onPress: () => console.log('OK Pressed!')},
-            ]*/
-          >
+            onPress = { () => { this.props.navigation.push("addReview")}}>
             <Text>添加评论</Text>
           </TouchableOpacity>
+         
           <TouchableOpacity style={styles.btnStyle}
             onPress = { () => { this.props.navigation.push("Review")}}>
             <Text>查看评论</Text>
           </TouchableOpacity>
         </View>
+        
       </Container>
     );
   }

@@ -136,6 +136,21 @@ app.post("/favorite", (req, res) => {
 });
 
 
+app.post("/addReview", (req, res) => {
+  const username = req.body.username;
+  const review = req.body.review;
+  //console.log(username);
+  con.query(
+    "INSERT INTO `TravelApp`.`Review` ( `username`,`reviewContent`) VALUES (?, ?)",
+    [username, review],
+    (err, result) => {
+      console.log(err);
+    }
+  );
+});
+
+
+
 app.get("/route", function (req, res) {
   con.query("select * from Route", function (error, rows, fields) {
     if (error) console.log(error);
