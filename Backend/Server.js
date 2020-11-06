@@ -135,6 +135,23 @@ app.post("/favorite", (req, res) => {
   });
 });
 
+//getFavorite
+app.get("/getFavorite", function(req, res){
+  
+  con.query("SELECT * FROM Collection",
+  (err, result) =>{
+    if(err){
+      res.send({err: err});
+    }
+    if(result.length > 0){
+      res.send(result);
+    } else{
+      
+    }
+  }
+  );
+});
+
 
 app.post("/addReview", (req, res) => {
   const username = req.body.username;

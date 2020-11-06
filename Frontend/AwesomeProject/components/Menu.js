@@ -27,20 +27,22 @@ function mapDispatchToProps(dispatch) {
 
 
 class Menu extends React.Component {
-  state = {
+  /*state = {
     top: new Animated.Value(screeHeight),
   };
 
+  
   componentDidMount() {
     this.toggleMenu();
   }
 
   componentDidUpdate(){
     this.toggleMenu();
-  }
+  }*/
 
 
   //close menu
+  /*
   toggleMenu = () => {
     if (this.props.action == 'openMenu') {
       Animated.spring(this.state.top, {
@@ -54,63 +56,51 @@ class Menu extends React.Component {
         toValue: screeHeight,
       }).start();
     }
-  };
+  };*/
 
   //大小写别写错了...
   render() {
     return (
-      <AnimatedContainer style={{top: this.state.top}}>
+      <Container>
         <StatusBar hide/>
         <Cover>
           <Image source={require('../assets/background2.jpg')} />
           <Title> Yuhan </Title>
           <Subtitle> Hi </Subtitle>
         </Cover>
-        <TouchableOpacity
-          onPress={this.props.closeMenu}
-          style={{
-            position: 'absolute',
-            top: 120,
-            left: '50%',
-            marginLeft: -22,
-            zIndex: 1,
-          }}>
-          <CloseView>
-            <Icon name="close" size={44} color="#546bfb" />
-          </CloseView>
-        </TouchableOpacity>
+        
         <Content>
           
-            <TouchableOpacity>
+            <TouchableOpacity
+             onPress = { () => {this.props.navigation.push("myOrder")}}>
               <MenuItem
               title={'My Orders'}
               text={'view and manage all of your previous orders'}
             />
             </TouchableOpacity>
 
-            <TouchableOpacity>
+            <TouchableOpacity
+            onPress = { () => {this.props.navigation.push("myReview")}}>
               <MenuItem
               title={'My Reviews'}
               text={'view and manage all of your comments'}
             />
             </TouchableOpacity>
 
-            <TouchableOpacity>
+            <TouchableOpacity
+            onPress = { () => {this.props.navigation.push("myFavorite")}} >
               <MenuItem
               title={'My Favorites'}
               text={'view routes you have collected'}
             />
             </TouchableOpacity>
-
-
-          
         </Content>
-      </AnimatedContainer>
+      </Container>
     );
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Menu);
+export default Menu;
 
 const Container = styled.View`
   position: absolute;
@@ -119,7 +109,7 @@ const Container = styled.View`
   height: 100%;
   z-index: 100;
 `;
-const AnimatedContainer = Animated.createAnimatedComponent(Container);
+//const AnimatedContainer = Animated.createAnimatedComponent(Container);
 
 const Cover = styled.View`
   height: 142px;

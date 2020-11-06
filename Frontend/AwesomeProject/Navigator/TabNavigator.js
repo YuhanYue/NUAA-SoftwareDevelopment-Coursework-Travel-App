@@ -16,6 +16,10 @@ import addReviewPage from "../scene/addReviewPage";
 import MyOrderPage from "../scene/MyOrderPage";
 import Menu from '../components/Menu'
 
+import MyReviewPage from "../scene/MyReviewPage";
+import MyFavoritePage from  '../scene/MyFavoritePage'
+
+
 
 
 
@@ -86,7 +90,6 @@ const ClassifyStack= createStackNavigator(
     Home: Home,
     addReview: addReviewPage,
     Review: ReviewScreen,
-    myOrder: MyOrderPage
   }
 );
 
@@ -113,10 +116,16 @@ ClassifyStack.navigationOptions = ({ navigation }) => {
 };
 
 
+
+
+
 const MenuStack = createStackNavigator(
   {
     Menu:Menu,
+    myReview: MyReviewPage,
     myOrder: MyOrderPage,
+    myFavorite: MyFavoritePage,
+    
   }
 );
 
@@ -145,6 +154,7 @@ const TabNavigator = createBottomTabNavigator({
   HomeStack,
   SearchStack,
   MenuStack,
+  
 });
 
 

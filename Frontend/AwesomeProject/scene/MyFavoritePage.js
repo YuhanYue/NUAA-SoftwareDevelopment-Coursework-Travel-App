@@ -23,13 +23,12 @@ export default class MyOrderPage extends Component {
   }
 
   fetchData = () => {
-    var url = 'http://192.168.1.106:3000/route';
-    this.setState({loading: true});
+    var url = 'http://192.168.1.106:3000/getFavorite';
     fetch(url)
       .then((res) => res.json()) //转Í化为json
       .then((json) => {
         this.setState({data: json}); //将json数据传递出去，setState会重新调用render()
-        //console.log(this.state.data);
+        console.log(this.state.data);
       })
       .catch((e) => {
         alert(e);
@@ -47,10 +46,10 @@ export default class MyOrderPage extends Component {
               <View
                 style={{backgroundColor: 'abc123', padding: 10, margin: 10}}>
                   <Text styel={{color: '#fff', fontWeight: 'bold'}}>
-                    {item.routeName}
+                    {item.routeID}
                   </Text>
                   <TouchableOpacity>
-                    <Text>删除订单</Text>
+                    <Text>查看路线</Text>
                   </TouchableOpacity>
               </View>
             )}

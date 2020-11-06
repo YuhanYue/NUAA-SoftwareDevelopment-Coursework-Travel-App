@@ -25,6 +25,8 @@ function mapDispatchToProps(dispatch){
   return {
     openMenu: () => dispatch ({
       type:"OPEN_MENU"
+
+
     })
   };
 }
@@ -37,11 +39,7 @@ class ClassifyScreen extends React.Component {
   }
 
   
-  static navigationOptions = ({navigation}) => {
-      title:"Home"
-      //title : navigation.getParam('otherParam', 'no-values'),
-}
-
+  
 /*
   static navigationOptions = {
     title: "Home"
@@ -92,13 +90,13 @@ class ClassifyScreen extends React.Component {
 
     return ( 
       <AnimatedContainer>
-        <Menu />
         <ScrollView style={{height: '100%'}}>
           {/*user*/}
           <TitleBar>
-            <TouchableOpacity onPress = {this.props.openMenu}>
+            
               <Avatar source={require('./image/logo.jpeg')} />
-            </TouchableOpacity>
+        
+
             <Title>Welcome back,</Title>
             <Name>Yuhan</Name>
             <NotificationIcon
