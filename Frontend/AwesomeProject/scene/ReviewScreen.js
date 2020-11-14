@@ -1,3 +1,6 @@
+
+
+//显示当前路线的评论
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, FlatList} from 'react-native';
 
