@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Text, View, Image, StyleSheet, TouchableOpacity, ToastAndroid, TextInput} from "react-native";
+import { Button, Text, View, Image, StyleSheet, TouchableOpacity, ToastAndroid, TextInput, AsyncStorage} from "react-native";
 //ios端提醒直接用Alert
 
 import HomeScene from './Home'
@@ -9,26 +9,75 @@ import {createBottomTabNavigator} from "react-navigation-tabs";
 //import {createStackNavigator} from 'react-navigation-stack'
 import ClassifyScreen from "./ClassifyScreen";
 import Axios from "axios";
+import { object } from "prop-types";
 //import { response } from "express";
 
 
 
+const userInfo = {username:'123',password:'123'}
 
+ 
+function mapDispatchToProps(dispatch) {
+  return {
+    updateUsername:(uername) =>
+      dispatch({
+        type:"UPDATE_USERNAME",
+        username
+      })
+  }
+}
 export default class LoginView extends Component{
-  username = '';
-  password = '';
 
+
+  constructor(props){
+    super(props);
+    this.state = {
+      username:'',
+    }
+  }
+
+componentDidMount() {
+  this.retrieveUsername();
+}
   
   onUsernameChanged = (newUsername) => {
     this.username = newUsername;
+    //update state usernmae
   };
 
   onPasswordChanged = (newPassword) => {
     this.password = newPassword;
   };
 
+
+  //store Data
+  storeUsername = async username => {
+    try {
+        await AsyncStorage.setItem("username", username)
+    }catch(error) {}
+  } 
+
+  retrieveUsername = async () => {
+    try{
+      const username = await AsyncStorage.getItem("username")
+      if(username !== null){
+        console.log(username);
+        this.props.updateUsername(username);
+      }
+    }catch(error){}
+    
+  }
+
   //登陆跳转
   login = () => {
+    /*if(userInfo.username == this.state.username && userInfo.password == this.state.password){
+      //alert('Logged In')
+      await AsyncStorage.setItem('isLoggedIn', '1');//check whether is logged in or not
+      this.props.navigation.replace("Tab");
+    } else{
+      alert('Username or Password is incorrect')
+    }*/
+    //下面这段要
     var url = 'http://192.168.1.106:3000/login';//ip地址在变化，要注意
     Axios.post(url ,{
       username: this.username, 
@@ -37,12 +86,18 @@ export default class LoginView extends Component{
       if(response.data.message){
         ToastAndroid.show('wrong username/password combination!',ToastAndroid.SHORT);
       } else{
+        this.storeUsername(this.username)
+        //console.log(this.username)
         this.props.navigation.replace("Tab");
         //.log(username);
+        this.retrieveUsername();
         ToastAndroid.show('登录成功',ToastAndroid.SHORT);
       }
       //console.log(response);
     });
+
+
+
     /*if (this.username == 'admin' && this.password == '123') {
       this.props.navigation.replace("Tab")
       ToastAndroid.show('登录成功',ToastAndroid.SHORT);
@@ -75,12 +130,16 @@ export default class LoginView extends Component{
     <View style={styles.container}>   
         <Image style={styles.circleImage} source={require('./image/logo.jpeg')}/>
         <TextInput
+            //onChangeText= {(username)=>this.setState({username})}
+            //value={this.state.username}
             onChangeText={this.onUsernameChanged}//绑定文本变化的回调函数
             style={styles.textInput}
             placeholder={'username'}
             //输入框下划线
             underlineColorAndroid={'transparent'}/>
         <TextInput
+            //onChangeText= {(password)=>this.setState({password})}
+            //value={this.state.password}
             onChangeText={this.onPasswordChanged}
             style={styles.textInput}
             placeholder={'password'}

@@ -26,22 +26,22 @@ const reducer = (state = initialState, action) => {
       return { ...state, action: "openMenu" };
     case "CLOSE_MENU":
       return { ...state, action: "closeMenu" };
-    case "UPDATE_NAME":
-      return { ...state, name: action.name };
-    case "UPDATE_AVATAR":
-      return { ...state, avatar: action.avatar };
+    case "UPDATE_USERNAME":
+      return { ...state, username: action.username };
+    /*case "UPDATE_AVATAR":
+      return { ...state, avatar: action.avatar };*/
     case "OPEN_CARD":
       return { ...state, action: "openCard" };
     case "CLOSE_CARD":
       return { ...state, action: "closeCard" };
-    case "OPEN_LOGIN":
+    /*case "OPEN_LOGIN":
       return { ...state, action: "openLogin" };
     case "CLOSE_LOGIN":
       return { ...state, action: "closeLogin" };
     case "OPEN_NOTIF":
       return { ...state, action: "openNotif" };
     case "CLOSE_NOTIF":
-      return { ...state, action: "closeNotif" };
+      return { ...state, action: "closeNotif" };*/
     default:
       return state;
   }

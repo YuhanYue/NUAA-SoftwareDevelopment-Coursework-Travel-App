@@ -1,7 +1,7 @@
 //分类的数据，
 //登陆后的username怎么传进来？
 import React from 'react';
-import {ScrollView, TouchableOpacity, Animated, Easing, View} from 'react-native';
+import {ScrollView, TouchableOpacity, Animated, Easing, View, AsyncStorage} from 'react-native';
 import Card from '../components/Card';
 
 import styled from 'styled-components';
@@ -21,17 +21,39 @@ function mapStateToProps(state)  {
 }
 
 
-function mapDispatchToProps(dispatch){
+function mapDispatchToProps(dispatch) {
   return {
-    openMenu: () => dispatch ({
-      type:"OPEN_MENU"
-
-
-    })
-  };
+    updateUsername:(uername) =>
+      dispatch({
+        type:"UPDATE_USERNAME",
+        username
+      })
+  }
 }
 
 class ClassifyScreen extends React.Component {
+
+  async componentDidMount() {
+    this.fetchData();
+    try {
+       const username = await AsyncStorage.getItem('username');
+       //console.log("classify page")
+       //console.log(username);
+       this.setState({username: username})
+       console.log(this.state.username)
+       } catch (error) {
+        console.log(error); 
+       }
+    }
+/*
+  componentDidMount = () => {
+    this.fetchData();
+    const newUsername = AsyncStorage.getItem('username');
+    //const users = AsyncStorage.getItem("username")
+    console.log('classify screen')
+    console.log(newUsername);
+  }*/
+ 
 
   constructor(props) {
     super(props);
@@ -47,7 +69,7 @@ class ClassifyScreen extends React.Component {
   state = {
     scale: new Animated.Value(1),
     routeData:null,
-    username: 'yuhan'
+    username: '',
     
   };
 
@@ -65,11 +87,7 @@ class ClassifyScreen extends React.Component {
         });
   }
 
-  componentDidMount(){
-    this.fetchData();
-    
-  }
- 
+
   /*
   componentDidUpdate(){
     this.toggleMenu()
@@ -98,7 +116,7 @@ class ClassifyScreen extends React.Component {
         
 
             <Title>Welcome back,</Title>
-            <Name>Yuhan</Name>
+            <Name>{this.state.username}</Name>
             <NotificationIcon
               style={{position: 'absolute', right: 20, top: 5}}
             />
