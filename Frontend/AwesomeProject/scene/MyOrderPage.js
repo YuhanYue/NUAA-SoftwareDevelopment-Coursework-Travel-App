@@ -4,26 +4,36 @@
 
 
 import React, {Component} from 'react';
-import {StyleSheet, View, FlatList, TouchableOpacity, ActivityIndicator} from 'react-native';
+import {StyleSheet, View, FlatList, TouchableOpacity, ActivityIndicator, AsyncStorage} from 'react-native';
 import {Container, Header, Item, Input, Icon, Button, Text, Left, Body} from 'native-base';
 import lodash from 'lodash';
 import _ from 'lodash';
 import SectionScreen from './SectionScreen'
+import Axios from "axios"
 
 export default class MyOrderPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data:[]
+      data:[],
+      username:[]
     };
   }
-  componentDidMount() {
+
+  async componentDidMount() {
     this.fetchData();
     //console.log(this.state.review);
-  }
+    try {//get username who logged in 
+      const username = await AsyncStorage.getItem('username');
+      this.setState({username: username})//取用户名
+      } catch (error) {
+       console.log(error); 
+      }
+   }
 
+   /*
   fetchData = () => {
-    var url = 'http://192.168.1.106:3000/route';
+    var url = 'http://192.168.1.101:3000/route';
     this.setState({loading: true});
     fetch(url)
       .then((res) => res.json()) //转Í化为json
@@ -34,7 +44,19 @@ export default class MyOrderPage extends Component {
       .catch((e) => {
         alert(e);
       });
-  };
+  };*/
+
+  fetchData() {
+    var url = 'http://192.168.1.101:3000/userOrder';
+    this.setState({loading: true});
+    Axios.post(url ,{
+      username: this.state.username
+    }).then((response) => {
+      console.log(this.state.username);
+           this.setState({data: response.data}); //将json数
+           console.log(this.state.data)
+      });
+    }
 
 
   render() {
@@ -64,19 +86,3 @@ export default class MyOrderPage extends Component {
 }
 
 
-const cards = [
-  {
-    title: 'React Native',
-    image: require('../image/test.jpeg'),
-    subtitle: 'text',
-    caption: '1 to 12',
-    logo: require('../assets/logo-react.png'),
-  },
-  {
-    title: 'React Native',
-    image: require('../image/test.jpeg'),
-    subtitle: 'react-Native',
-    caption: '1 to 12',
-    logo: require('../assets/logo-react.png'),
-  },
-];

@@ -1,6 +1,6 @@
 //HomePage
 import React from 'react';
-import {PanResponder, Animated} from 'react-native';
+import {PanResponder, Animated, FlatList} from 'react-native';
 //import { ScreenStackHeaderCenterView } from 'react-native-screens';
 import styled from 'styled-components';
 import TravelRoute from '../components/TavelRoute';
@@ -33,9 +33,37 @@ class Home extends React.Component {
     thirdTranslateY: new Animated.Value(-50),
     index: 0,
     opacity: new Animated.Value(-1),
+    routeData:null
   };
 
-  componentWillMount() {
+  fetchData(){
+    var url = 'http://192.168.1.101:3000/route';
+    fetch(url)
+        .then((res)=> res.json())//转化为json
+        .then((json)=>{
+            this.setState({routeData:json});//将json数据传递出去，setState会重新调用render()
+            
+            //console.log(this.state.routeName);
+            //console.log(this.state.routeData[0]);
+        })
+        .catch((e)=>{
+            alert(e);
+        });
+  }
+
+  async componentWillMount() {
+      this.fetchData();
+    //get username
+    try {
+      const username = await AsyncStorage.getItem('username');
+      //console.log("classify page")
+      //console.log(username);
+      this.setState({username: username})
+      //console.log(this.state.username)
+      } catch (error) {
+       console.log(error); 
+      }
+
     this._panResponder = PanResponder.create({
       onMoveShouldSetPanResponder: (event, gestureState) => {
         if (gestureState.dx === 0 && gestureState.dy === 0) {
@@ -108,13 +136,17 @@ class Home extends React.Component {
             ],
           }}
           {...this._panResponder.panHandlers}>
+        
           <TravelRoute
+            /*title = {item.routeName}
+            text = {item.routeIntro}*/
             title={travelroute[this.state.index].title}
             image={travelroute[this.state.index].image}
             timeline={travelroute[this.state.index].timeline}
             text={travelroute[this.state.index].text}
-            canOpen={true} //Only allow to open 1st card
+            canOpen={true} //Only allow to open 1st card*/
           />
+          
         </Animated.View>
         <Animated.View
           style={{

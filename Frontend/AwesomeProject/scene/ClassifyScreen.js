@@ -76,17 +76,12 @@ class ClassifyScreen extends React.Component {
   };
 
   fetchData(){
-    name = [];
     var url = 'http://192.168.1.101:3000/route';
     fetch(url)
         .then((res)=> res.json())//转化为json
         .then((json)=>{
             this.setState({routeData:json});//将json数据传递出去，setState会重新调用render()
             
-            for(var i=0;i<json.length;i++){
-              name.push(json[i]['routeName']);           
-             }
-            this.setState({routeName: name})
             //console.log(this.state.routeName);
             //console.log(this.state.routeData[0]);
         })

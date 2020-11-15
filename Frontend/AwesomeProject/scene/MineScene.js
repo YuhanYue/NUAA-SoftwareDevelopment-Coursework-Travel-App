@@ -8,6 +8,28 @@ import TabNavigator from 'react-native-tab-navigator';
 import { Navigator } from 'react-native-deprecated-custom-components'
 
 export default class MineScene extends Component{
+
+  async componentDidMount() {
+    this.fetchData();
+    try {
+       const username = await AsyncStorage.getItem('username');
+       //console.log("classify page")
+       //console.log(username);
+       this.setState({username: username})
+       //console.log(this.state.username)
+       } catch (error) {
+        console.log(error); 
+       }
+    }
+    constructor(props) {
+      super(props);
+      state = {
+        username:[],
+      }
+      //this.username = navigation.getParam('username');
+    }
+    
+
   //订单界面
   OrderView = () => {
     this.props.navigator.push({
@@ -42,7 +64,12 @@ export default class MineScene extends Component{
          <View style={styles.container}>   
              <Image style={styles.circleImage} source={require('./image/logo.jpeg')}/>
                 <TouchableOpacity style={styles.btnStyle}
-                    onPress= {this._pressButton} >
+                    onPress= {() => {
+                      this.props.navigation.push("myOrder", {
+                        username:this.state.username
+                        //passing data
+                      })
+                    }} >
                 <Text 
                     style={styles.loginText}>我的订单</Text>
                 </TouchableOpacity>

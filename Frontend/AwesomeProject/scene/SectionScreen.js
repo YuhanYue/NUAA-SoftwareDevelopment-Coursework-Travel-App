@@ -96,6 +96,7 @@ class SectionScreen extends React.Component {
     Axios.post(url ,{
       username: this.state.username, 
       routeID: routeID,
+      routeName: routeName,
       //routeID: this.routeID,
     }).then((response) => {
       //console.log(response);

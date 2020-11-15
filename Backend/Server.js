@@ -85,14 +85,36 @@ app.post("/review", function(req, res){
   );
 });
 
+//get orders for specific user
+app.post("/userOrder", function(req, res){
+  const username = req.body.username;
+  con.query("SELECT * FROM Order where username = ?",
+  [username],
+  (err, result) =>{
+    console.log(username)
+    if(err){
+      res.send({err: err});
+    }
+    if(result.length > 0){
+      res.send(result);
+      console.log(result)
+    } else{
+      res.send({message: "No orders for this user yet!"});
+    }
+  }
+  );
+});
+
 //order
 app.post("/order", (req, res) => {
   const username = req.body.username;
   const routeID = req.body.routeID;
+  const routeName = req.body.routeName;
   con.query(
-    " INSERT INTO `TravelApp`.`Order` ( `username`, `routeID`) VALUES ( ?,?)",
-    [username, routeID],
+    " INSERT INTO `TravelApp`.`Order` ( `username`, `routeID`,`routeName`) VALUES ( ?,?,?)",
+    [username, routeID, routeName],
     (err, result) => {
+      console.log(routeName)
       console.log(err);
       //console.log(username);
       //console.log(routeID)

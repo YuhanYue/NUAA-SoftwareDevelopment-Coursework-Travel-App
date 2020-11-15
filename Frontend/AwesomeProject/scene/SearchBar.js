@@ -1,145 +1,5 @@
-/*import { typeAlias } from '@babel/types';
-import React from 'react';
-import {
-  Dimensions,
-  StyleSheet,
-  View,
-  TextInput,
-  Image,
-  TouchableHighLight,
-  ScrollView
-} from 'react-native';
-//icons
-import Icon from 'react-native-vector-icons/FontAwesome';
-import Animated, { Easing } from 'react-native-reanimated';
-const { Value, timing } = Animated;
+//Search Page
 
-
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
-
-class SearchBar extends React.Component {
-
-  constructor(props){
-    super(props)
-    this.state ={
-      isFocoused: false,
-      keyWord:'',
-    }
-
-    //Animation values
-    this._input_box_translate_x = new Value(width);
-    this._back_button_opacity = new Value(0);
-    this._content_translate_y = new Value(height);
-    this._content_opacity = new Value(0);
-
-  }
-
-  onFocus = () =>{
-
-  }
-
-  onBlur = () =>{
-
-  }
-
-  render() {
-    return (
-      <>
-      <View style = {styles.header}>
-        <View style = {styles.header_inner}>
-          <View>
-            <Image
-            source = {require('./image/logo.jpeg')}
-            style ={{width: 152, height: 30}}
-            />
-          </View>
-          <TouchableHighLight
-          activeOpacity = {1}
-          underlayColor = {'#ccd0d5'}
-          onPress = {this.onFocus}
-          style = {styles.search_icon_box}>
-            <Icon name ="search" size = {22} color = '#000000' />
-          </TouchableHighLight>
-        <Animated.View 
-        style = { [ styles.input_box, {transfor: [{ translateX: this._input_box_translate_x}]}]}>
-          <Animated.View style = {{ opacity: this._back_button_opacity }}>
-            <TouchableHighLight
-            activeOpacity = {1}
-            underlayColor = {'#ccd0d5'}
-          onPress = {this.onBlur}
-          style = {styles.back_icon_box}>
-
-             <Icon name = "chevron-left" size = {22} color = '#000000' />
-            </TouchableHighLight>
-          </Animated.View>
-          <TextInput
-          ref = "input"
-          placeholder = "Search Route"
-          clearButtonMode = "always"
-          value = {this.state.keyWord}
-          onChangeText = {(value) => this.setState({keyWord: value})}
-          style = {styles.input}
-          />
-        </Animated.View>
-        </View>
-      </View>
-
-      <Animated.View style = {[styles.content, {opacity: this._content_opacity, transform: [{ translateY: this._content_translate_y}] }]}>
-        <View >
-      </Animated.View>
-      </>
-    )
-  }
-}
-
-export default SearchBar
-
-const styles= StyleSheet.create({
-  header: {
-    height: 50,
-    paddingHorizontal: 16
-  },
-  header_inner:{
-    flex: 1,
-    overflow:'hidden',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    position: 'relative'
-  },
-  search_icon_box:{
-    width: 40,
-    height: 40,
-    borderRadius: 40,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  input_box:{
-    height: 50,
-    flexDirection: 'row',
-    alignItems: 'center',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    backgroundColor: 'white',
-    width: width -32
-  },
-  _back_button_opacity:{
-
-  },
-  back_icon_box:{
-
-  },
-  input: {
-
-  },
-  content: {
-
-  }
-
-})*/
 import React, {Component} from 'react';
 import {StyleSheet, View, FlatList, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {Container, Header, Item, Input, Icon, Button, Text, Left, Body} from 'native-base';
@@ -156,15 +16,25 @@ export default class SearchBar extends Component {
       error: null,
       loading: false,
       query: '',
+      username:[],
     };
   }
-  componentDidMount() {
+
+  async componentDidMount() {
     this.fetchData();
-    //console.log(this.state.review);
-  }
+    try {
+       const username = await AsyncStorage.getItem('username');
+       //console.log("classify page")
+       //console.log(username);
+       this.setState({username: username})
+       //console.log(this.state.username)
+       } catch (error) {
+        console.log(error); 
+       }
+    }
 
   fetchData = () => {
-    var url = 'http://192.168.1.106:3000/route';
+    var url = 'http://192.168.1.101:3000/route';
     this.setState({loading: true});
     fetch(url)
       .then((res) => res.json()) //转化为json
@@ -232,6 +102,7 @@ export default class SearchBar extends Component {
                 style={{backgroundColor: 'abc123', padding: 10, margin: 10}}>
                 <TouchableOpacity onPress = {() => {
                   this.props.navigation.push("Section", {
+                    routeID: item.routeID,
                     section: cards
                     //passing data
                   })
