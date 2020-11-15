@@ -14,18 +14,6 @@ import { object } from "prop-types";
 
 
 
-const userInfo = {username:'123',password:'123'}
-
- 
-function mapDispatchToProps(dispatch) {
-  return {
-    updateUsername:(uername) =>
-      dispatch({
-        type:"UPDATE_USERNAME",
-        username
-      })
-  }
-}
 export default class LoginView extends Component{
 
 
@@ -48,7 +36,6 @@ componentDidMount() {
   onPasswordChanged = (newPassword) => {
     this.password = newPassword;
   };
-
 
   //store Data
   storeUsername = async username => {

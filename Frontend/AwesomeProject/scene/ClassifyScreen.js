@@ -40,7 +40,7 @@ class ClassifyScreen extends React.Component {
        //console.log("classify page")
        //console.log(username);
        this.setState({username: username})
-       console.log(this.state.username)
+       //console.log(this.state.username)
        } catch (error) {
         console.log(error); 
        }
@@ -69,18 +69,26 @@ class ClassifyScreen extends React.Component {
   state = {
     scale: new Animated.Value(1),
     routeData:null,
-    username: '',
+    username: [],
+    routeName:'',
+    routeIntro:'',
     
   };
 
   fetchData(){
-    
-    var url = 'http://192.168.1.106:3000/route';
+    name = [];
+    var url = 'http://192.168.1.101:3000/route';
     fetch(url)
         .then((res)=> res.json())//转化为json
         .then((json)=>{
             this.setState({routeData:json});//将json数据传递出去，setState会重新调用render()
-
+            
+            for(var i=0;i<json.length;i++){
+              name.push(json[i]['routeName']);           
+             }
+            this.setState({routeName: name})
+            //console.log(this.state.routeName);
+            //console.log(this.state.routeData[0]);
         })
         .catch((e)=>{
             alert(e);
@@ -153,7 +161,25 @@ class ClassifyScreen extends React.Component {
             horizontal={true}
             style={{paddingBottom: 30}}
             showsHorizontalScrollIndicator={false}>
-
+               <FlatList data ={this.state.routeData} keyExtractor={(item, index) => index.toString()} renderItem={({item}) =>
+                  <TouchableOpacity  onPress = {() => {
+                    this.props.navigation.push("Section", {
+                      routeID: item.routeID,
+                      section: cards,
+                      //passing data
+                    })
+                  }}>
+                    <Card 
+                title={item.routeName}
+                //image={card.image}
+                caption={item.routeDuration}
+                subtitle={item.routeIntro}
+              />
+                  </TouchableOpacity>
+             
+            }
+              />
+{/*
             {cards.map((card, index) => (
               <TouchableOpacity key={index} onPress = {() => {
                 this.props.navigation.push("Section", {
@@ -173,6 +199,7 @@ class ClassifyScreen extends React.Component {
              
             </TouchableOpacity>
             ))}
+              */}
           </ScrollView>
         </ScrollView>
       </AnimatedContainer>
@@ -181,6 +208,8 @@ class ClassifyScreen extends React.Component {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClassifyScreen);
+
+
 
 const Subtitle = styled.Text`
   color: #b8bece;

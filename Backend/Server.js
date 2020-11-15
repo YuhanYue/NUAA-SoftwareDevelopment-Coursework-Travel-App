@@ -48,7 +48,6 @@ app.post("/login", (req, res) => {
   const username = req.body.username;
   const passwd = req.body.passwd;
   
-  
   //console.log(username);
   con.query(
     "SELECT * FROM Users WHERE username = ? AND passwd = ?",
@@ -67,15 +66,18 @@ app.post("/login", (req, res) => {
 });
 
 //get review for a route
-app.get("/review", function(req, res){
-  
-  con.query("SELECT * FROM Review",
+app.post("/review", function(req, res){
+  const routeID = req.body.routeID;
+  con.query("SELECT * FROM Review where routeID = '?'",
+  [routeID],
   (err, result) =>{
+    console.log(routeID)
     if(err){
       res.send({err: err});
     }
     if(result.length > 0){
       res.send(result);
+      console.log(result)
     } else{
       res.send({message: "No review for this route yet!"});
     }
@@ -86,12 +88,14 @@ app.get("/review", function(req, res){
 //order
 app.post("/order", (req, res) => {
   const username = req.body.username;
+  const routeID = req.body.routeID;
   con.query(
-    " INSERT INTO `TravelApp`.`Order` ( `username`) VALUES ( ?)",
-    [username],
+    " INSERT INTO `TravelApp`.`Order` ( `username`, `routeID`) VALUES ( ?,?)",
+    [username, routeID],
     (err, result) => {
       console.log(err);
       //console.log(username);
+      //console.log(routeID)
     }
   );
 });
@@ -113,21 +117,24 @@ app.post("/register", (req, res) => {
 //add favorite
 app.post("/favorite", (req, res) => {
   const username = req.body.username;
+  const routeID = req.body.routeID;
   con.query(
-    " INSERT INTO Collection ( `username`) VALUES ( ?)",
-    [username],
+    " INSERT INTO Collection ( `username`,`routeID`) VALUES ( ?,?)",
+    [username,routeID],
     (err, result) => {
       console.log(err);
       console.log(err);
     }
   );
 
+  //cancel favorite
   app.post("/cancelFavorite", (req, res) => {
     const username = req.body.username;
+    const routeID = req.body.routeID;
     //console.log(username);
     con.query(
-      "DELETE FROM Collection WHERE (`username` =?)",
-      [username],
+      "DELETE FROM Collection WHERE (`username` =?) AND (`routeID ` = ?)",
+      [username,routeID],
       (err, result) => {
         console.log(err);
       }

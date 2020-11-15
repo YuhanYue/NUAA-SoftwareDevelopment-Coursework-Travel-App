@@ -7,7 +7,8 @@ import {
   Text,
   View,
   StyleSheet,
-  Alert
+  Alert,
+  AsyncStorage
 } from 'react-native';
 import Axios from "axios";
 
@@ -16,22 +17,41 @@ import {FlatList, ScrollView, ListView, TextInput} from 'react-native-gesture-ha
 //ßimport reviewInput from ('../components/reviewInput')
 
 
-
 const activeColor = "#F6BF1C";
 const inactiveColor = "#E6E8EB";
-
+var routeName = '';  
+var routeDuration = '';
+var routeIntro = '';
 
 
 class SectionScreen extends React.Component {
+  routeID = '';
+  //routeName = '';
+
+  
+
   static navigationOptions = {
     heeder: null,
   };
 
+
+  async componentDidMount() {
+    this.fetchData();
+    
+    try {//get username who logged in 
+       const username = await AsyncStorage.getItem('username');
+       this.setState({username: username})//取用户名
+       } catch (error) {
+       
+        console.log(error); 
+       }
+    }
+
   constructor(props) {
     super(props);
     this.state = {
-      data: null,
-      username: 'yuhan',
+      data: '',
+      username: '',
       isFavorite: false,
     };
   }
@@ -49,31 +69,33 @@ class SectionScreen extends React.Component {
     this.setState({data:card});
   }*/
 
-  
-  componentDidMount() {
-    this.fetchData();
-    //console.log(this.state.data);
-  }
 
-  fetchData() {
-    var url = 'http://192.168.1.106:3000/route';
+  
+  fetchData() {//route里存图片？
+    var url = 'http://192.168.1.101:3000/route';
     fetch(url)
       .then((res) => res.json()) //转化为json
       .then((json) => {
         this.setState({data: json}); //将json数据传递出去，setState会重新调用render()
-        //console.log(this.state.data);
+        
+        //console.log(routeID);
+        routeName = json[routeID -1].routeName;
+        routeIntro = json[routeID -1].routeIntro;
+        routeDuration = json[routeID - 1].routeDuration;
+        //console.log(routeName)
+      
       })
       .catch((e) => {
         alert(e);
       });
   }
 
-  
+
   Order = () =>{
-    var url = 'http://192.168.1.106:3000/order';//ip地址在变化，要注意
+    var url = 'http://192.168.1.101:3000/order';//ip地址在变化，要注意
     Axios.post(url ,{
       username: this.state.username, 
-      routeID: '1',
+      routeID: routeID,
       //routeID: this.routeID,
     }).then((response) => {
       //console.log(response);
@@ -81,15 +103,15 @@ class SectionScreen extends React.Component {
       //console.log(username);
     });
   }
-ß
+
   addFavorite = () => {
     if (this.state.isFavorite){//已经添加喜欢
       this.setState({ isFavorite: false});
       //取消收藏
-      var url = 'http://192.168.1.106:3000/cancelFavorite';
+      var url = 'http://192.168.1.101:3000/cancelFavorite';
       Axios.post(url ,{
       username: this.state.username, 
-      routeID: '1',
+      routeID: routeID,
       //routeID: this.routeID,
     }).then((response) => {
       //console.log(response);
@@ -98,10 +120,10 @@ class SectionScreen extends React.Component {
     });
     } else{//没添加到喜欢,则添加喜欢
       this.setState({ isFavorite: true});
-      var url = 'http://192.168.1.106:3000/favorite';
+      var url = 'http://192.168.1.101:3000/favorite';
     Axios.post(url ,{
       username: this.state.username, 
-      routeID: '1',
+      routeID: routeID,
       //routeID: this.routeID,
     }).then((response) => {
       //console.log(response);
@@ -114,21 +136,28 @@ class SectionScreen extends React.Component {
   }
   render() {
     //recieve data
+    this.fetchData();
     const {navigation} = this.props;
     const section = navigation.getParam('section');
+    const routeInfo = navigation.getParam('routeInfo');
+    routeID = navigation.getParam('routeID');
+    //console.log(routeName)
+    //this.setState({routeID: routeID});
+
     //this.username = navigation.getParam('username');
     //this.setState({username: username});
     return (
       <Container>
         <StatusBar hidden />
         <Cover>
-          <Image source={section.image} />
+          {/*<Image source={section.image} />*/}
           <Wrapper>
-            <Logo source={section.logo} />
+            {/*<Logo source={section.logo} />*/}
             <Subtitle source={section.subtitle} />
           </Wrapper>
-          <Title>{section.title}</Title>
-          <Caption>{section.caption}</Caption>
+           
+        <Title>{routeName}</Title>
+          <Caption>旅行天数：{routeDuration}</Caption>
         </Cover>
         <TouchableOpacity style={{position: 'absolute', top: 20, right: 20}
         } onPress = {this.addFavorite}>
@@ -144,7 +173,8 @@ class SectionScreen extends React.Component {
         </TouchableOpacity>
         <ScrollView>
           <Content>
-            <View>
+      <Text>{routeIntro}</Text>
+           {/* <View>
               <FlatList
                 data={this.state.data}
                 renderItem={({item}) => (
@@ -153,7 +183,7 @@ class SectionScreen extends React.Component {
                   </View>
                 )}
               />
-            </View>
+                </View>*/}
           </Content>
         </ScrollView>
 
@@ -169,7 +199,9 @@ class SectionScreen extends React.Component {
           </TouchableOpacity>
          
           <TouchableOpacity style={styles.btnStyle}
-            onPress = { () => { this.props.navigation.push("Review")}}>
+            onPress = { () => { this.props.navigation.push("Review",{
+              routeID:routeID
+            })}}>
             <Text>查看评论</Text>
           </TouchableOpacity>
         </View>

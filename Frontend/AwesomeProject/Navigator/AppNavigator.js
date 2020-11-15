@@ -53,8 +53,8 @@ import addReviewPage from "../scene/addReviewPage";
 const AppNavigator = createStackNavigator(
   {
     //addReview: addReviewPage,
-    Login: LoginView,
-    SignUp: SignUpView,
+    //Login: LoginView,
+    //SignUp: SignUpView,
     Tab:TabNavigator,
   },
   {

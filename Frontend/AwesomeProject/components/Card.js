@@ -71,7 +71,7 @@ const Image = styled.Image`
 `;
 
 const Title = styled.Text`
-  color: white;
+  color: black;
   font-size: 24px;
   font-weight: bold;
   margin-top: 20px;
