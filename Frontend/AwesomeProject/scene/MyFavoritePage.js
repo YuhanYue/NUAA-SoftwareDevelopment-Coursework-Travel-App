@@ -4,36 +4,43 @@
 
 
 import React, {Component} from 'react';
-import {StyleSheet, View, FlatList, TouchableOpacity, ActivityIndicator} from 'react-native';
+import {StyleSheet, View, FlatList, TouchableOpacity, ActivityIndicator, AsyncStorage} from 'react-native';
 import {Container, Header, Item, Input, Icon, Button, Text, Left, Body} from 'native-base';
 import lodash from 'lodash';
 import _ from 'lodash';
 import SectionScreen from './SectionScreen'
+import Axios from "axios"
 
 export default class MyOrderPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      data:[]
-    };
-  }
-  componentDidMount() {
-    this.fetchData();
-    //console.log(this.state.review);
   }
 
-  fetchData = () => {
-    var url = 'http://192.168.1.106:3000/getFavorite';
-    fetch(url)
-      .then((res) => res.json()) //转Í化为json
-      .then((json) => {
-        this.setState({data: json}); //将json数据传递出去，setState会重新调用render()
-        console.log(this.state.data);
-      })
-      .catch((e) => {
-        alert(e);
+  state = {
+    data: [],
+    username:'',
+  }
+
+  async componentDidMount() {
+    try {//get username who logged in 
+      const username = await AsyncStorage.getItem('username');
+      this.setState({username: username})//取用户名
+      } catch (error) {
+       console.log(error); 
+      }
+      this.fetchData();
+      console.log(this.state.data)
+   }
+
+   fetchData() {
+    var url = 'http://192.168.1.100:3000/getFavorite';
+    Axios.post(url ,{
+      username: this.state.username, 
+    }).then((response) => {
+           this.setState({data: response.data}); //将json数
       });
-  };
+    }
+
 
 
   render() {

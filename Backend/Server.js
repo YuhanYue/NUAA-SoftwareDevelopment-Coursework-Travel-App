@@ -88,17 +88,17 @@ app.post("/review", function(req, res){
 //get orders for specific user
 app.post("/userOrder", function(req, res){
   const username = req.body.username;
-  con.query("SELECT * FROM Order where username = ?",
+  //console.log(username)
+  con.query("SELECT * FROM `TravelApp`.`Order` WHERE username = ?",
   [username],
   (err, result) =>{
-    console.log(username)
     if(err){
       res.send({err: err});
     }
     if(result.length > 0){
       res.send(result);
       console.log(result)
-    } else{
+    } else{//只能res.send一次
       res.send({message: "No orders for this user yet!"});
     }
   }
@@ -118,6 +118,21 @@ app.post("/order", (req, res) => {
       console.log(err);
       //console.log(username);
       //console.log(routeID)
+    }
+  );
+});
+
+
+//delete order
+app.post("/deleteOrder", (req, res) => {
+  const username = req.body.username;
+  const routeID = req.body.routeID;
+  con.query(
+    " DELETE FROM `TravelApp`.`Order` WHERE (`routeID` = ?) AND (`username` = ?);",
+    [routeID, username],
+    (err, result) => {
+      console.log(username);
+      console.log(routeID)
     }
   );
 });
@@ -165,21 +180,24 @@ app.post("/favorite", (req, res) => {
 });
 
 //getFavorite
-app.get("/getFavorite", function(req, res){
-  
-  con.query("SELECT * FROM Collection",
+app.post("/getFavorite", function(req, res){
+  const username = req.body.username;
+  con.query("SELECT * FROM Collection WHERE username = ?",
+  [username],
   (err, result) =>{
     if(err){
       res.send({err: err});
     }
     if(result.length > 0){
       res.send(result);
+      console.log(result);
     } else{
-      
+      res.send({message: "No favorites for this user yet!"});
     }
   }
   );
 });
+
 
 
 app.post("/addReview", (req, res) => {
@@ -195,6 +213,51 @@ app.post("/addReview", (req, res) => {
   );
 });
 
+//get review for a user
+/*
+app.post("/userReview", (req, res) => {
+  const username = req.body.username;
+  //console.log(username);
+  con.query(
+    "SELECT * FROM Review WHERE username = ?",
+    [username],
+    (err, result) => {
+      console.log(result);
+    }
+  );
+});*/
+
+//get review for a specific user
+app.post("/userReview", function(req, res){
+  const username = req.body.username;
+  //console.log(username)
+  con.query("SELECT * FROM Review WHERE username = ?",
+  [username],
+  (err, result) =>{
+    if(err){
+      res.send({err: err});
+    }
+    if(result.length > 0){
+      res.send(result);
+      console.log(result)
+    } else{//只能res.send一次
+      res.send({message: "No reviews for this user yet!"});
+    }
+  }
+  );
+});
+
+//delete review
+app.post("/deleteReview", (req, res) => {
+  const username = req.body.username;
+  const reviewID = req.body.reviewID;
+  con.query(
+    " DELETE FROM `TravelApp`.`Review` WHERE (`reviewID` = ?) AND (`username` = ?);",
+    [reviewID, username],
+    (err, result) => {
+    }
+  );
+});
 
 
 app.get("/route", function (req, res) {

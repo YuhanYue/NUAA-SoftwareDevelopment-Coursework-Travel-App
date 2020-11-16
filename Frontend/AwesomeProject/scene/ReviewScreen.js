@@ -17,7 +17,7 @@ export default class ReviewScreen extends Component {
   }
 
   fetchData() {
-    var url = 'http://192.168.1.101:3000/review';
+    var url = 'http://192.168.1.100:3000/review';
     Axios.post(url ,{
       routeID:routeID
     }).then((response) => {

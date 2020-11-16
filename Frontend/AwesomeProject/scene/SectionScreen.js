@@ -72,7 +72,7 @@ class SectionScreen extends React.Component {
 
   
   fetchData() {//route里存图片？
-    var url = 'http://192.168.1.101:3000/route';
+    var url = 'http://192.168.1.100:3000/route';
     fetch(url)
       .then((res) => res.json()) //转化为json
       .then((json) => {
@@ -92,7 +92,7 @@ class SectionScreen extends React.Component {
 
 
   Order = () =>{
-    var url = 'http://192.168.1.101:3000/order';//ip地址在变化，要注意
+    var url = 'http://192.168.1.100:3000/order';//ip地址在变化，要注意
     Axios.post(url ,{
       username: this.state.username, 
       routeID: routeID,
@@ -109,7 +109,7 @@ class SectionScreen extends React.Component {
     if (this.state.isFavorite){//已经添加喜欢
       this.setState({ isFavorite: false});
       //取消收藏
-      var url = 'http://192.168.1.101:3000/cancelFavorite';
+      var url = 'http://192.168.1.100:3000/cancelFavorite';
       Axios.post(url ,{
       username: this.state.username, 
       routeID: routeID,
@@ -121,7 +121,7 @@ class SectionScreen extends React.Component {
     });
     } else{//没添加到喜欢,则添加喜欢
       this.setState({ isFavorite: true});
-      var url = 'http://192.168.1.101:3000/favorite';
+      var url = 'http://192.168.1.100:3000/favorite';
     Axios.post(url ,{
       username: this.state.username, 
       routeID: routeID,

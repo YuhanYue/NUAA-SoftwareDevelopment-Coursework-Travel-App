@@ -4,37 +4,50 @@
 
 
 import React, {Component} from 'react';
-import {StyleSheet, View, FlatList, TouchableOpacity, ActivityIndicator} from 'react-native';
+import {StyleSheet, View, FlatList, TouchableOpacity, ActivityIndicator, AsyncStorage} from 'react-native';
 import {Container, Header, Item, Input, Icon, Button, Text, Left, Body} from 'native-base';
 import lodash from 'lodash';
 import _ from 'lodash';
 import SectionScreen from './SectionScreen'
+import Axios from "axios"
 
 export default class MyFavoritePage extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      data:[]
-    };
   }
-  componentDidMount() {
-    this.fetchData();
-    //console.log(this.state.review);
+ state = {
+    data:[],
+    username:'',
+  };
+
+  async componentDidMount() {
+    try {
+      const username = await AsyncStorage.getItem('username');
+      this.setState({username: username})
+      } catch (error) {
+      }
+      this.fetchData();
+      //console.log(this.state.data)
   }
 
-  fetchData = () => {
-    var url = 'http://192.168.1.106:3000/review';
-    this.setState({loading: true});
-    fetch(url)
-      .then((res) => res.json()) //转Í化为json
-      .then((json) => {
-        this.setState({data: json}); //将json数据传递出去，setState会重新调用render()
-        //console.log(this.state.data);
-      })
-      .catch((e) => {
-        alert(e);
+
+  fetchData() {
+    var url = 'http://192.168.1.100:3000/userReview';
+    Axios.post(url ,{
+      username: this.state.username
+    }).then((response) => {
+           this.setState({data: response.data});
       });
-  };
+    }
+
+    //delete specified review
+    deleteReview = (item) =>{
+      var url = 'http://192.168.1.100:3000/deleteReview';
+      Axios.post(url ,{
+        username: this.state.username, 
+        reviewID: item.reviewID,
+      })
+    }
 
 
   render() {
@@ -44,12 +57,11 @@ export default class MyFavoritePage extends Component {
           <FlatList
             data={this.state.data}
             renderItem={({item}) => (
-              <View
-                style={{backgroundColor: 'abc123', padding: 10, margin: 10}}>
+              <View>
                   <Text styel={{color: '#fff', fontWeight: 'bold'}}>
                     {item.reviewContent}
                   </Text>
-                  <TouchableOpacity>
+                  <TouchableOpacity onPress = {this.deleteReview(item)}>
                     <Text>删除评论</Text>
                   </TouchableOpacity>
               </View>
@@ -62,21 +74,3 @@ export default class MyFavoritePage extends Component {
     );
   }
 }
-
-
-const cards = [
-  {
-    title: 'React Native',
-    image: require('../image/test.jpeg'),
-    subtitle: 'text',
-    caption: '1 to 12',
-    logo: require('../assets/logo-react.png'),
-  },
-  {
-    title: 'React Native',
-    image: require('../image/test.jpeg'),
-    subtitle: 'react-Native',
-    caption: '1 to 12',
-    logo: require('../assets/logo-react.png'),
-  },
-];

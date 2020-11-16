@@ -66,7 +66,6 @@ export default class MineScene extends Component{
                 <TouchableOpacity style={styles.btnStyle}
                     onPress= {() => {
                       this.props.navigation.push("myOrder", {
-                        username:this.state.username
                         //passing data
                       })
                     }} >

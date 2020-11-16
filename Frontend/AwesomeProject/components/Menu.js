@@ -2,7 +2,7 @@
 
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import {Animated, TouchableOpacity, Dimensions, StatusBar} from 'react-native';
+import {Animated, TouchableOpacity, Dimensions, StatusBar, AsyncStorage} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MenuItem from '../components/MenuItem';
 import {connect} from 'react-redux';
@@ -27,45 +27,30 @@ function mapDispatchToProps(dispatch) {
 
 
 class Menu extends React.Component {
-  /*state = {
-    top: new Animated.Value(screeHeight),
+
+  state = {
+    username : ''
   };
 
-  
-  componentDidMount() {
-    this.toggleMenu();
-  }
-
-  componentDidUpdate(){
-    this.toggleMenu();
-  }*/
-
-
-  //close menu
-  /*
-  toggleMenu = () => {
-    if (this.props.action == 'openMenu') {
-      Animated.spring(this.state.top, {
-        //set animation properties
-        toValue: 0,
-      }).start();
+  async componentDidMount() {
+    try {
+       const username = await AsyncStorage.getItem('username');
+       //console.log("classify page")
+       //console.log(username);
+       this.setState({username: username})
+       //console.log(this.state.username)
+       } catch (error) {
+        console.log(error); 
+       }
     }
 
-    if (this.props.action == 'closeMenu') {
-      Animated.spring(this.state.top, {
-        toValue: screeHeight,
-      }).start();
-    }
-  };*/
-
-  //大小写别写错了...
   render() {
     return (
       <Container>
         <StatusBar hide/>
         <Cover>
           <Image source={require('../assets/background2.jpg')} />
-          <Title> Yuhan </Title>
+          <Title>{this.state.username}  </Title>
           <Subtitle> Hi </Subtitle>
         </Cover>
         

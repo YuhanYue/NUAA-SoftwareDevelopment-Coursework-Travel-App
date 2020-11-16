@@ -14,50 +14,44 @@ import Axios from "axios"
 export default class MyOrderPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      data:[],
-      username:[]
-    };
   }
+  state = {
+    data:[],
+    username:'',
+  };
 
   async componentDidMount() {
-    this.fetchData();
-    //console.log(this.state.review);
+  
+  
     try {//get username who logged in 
       const username = await AsyncStorage.getItem('username');
       this.setState({username: username})//取用户名
       } catch (error) {
        console.log(error); 
       }
+      this.fetchData();
    }
 
-   /*
-  fetchData = () => {
-    var url = 'http://192.168.1.101:3000/route';
-    this.setState({loading: true});
-    fetch(url)
-      .then((res) => res.json()) //转Í化为json
-      .then((json) => {
-        this.setState({data: json}); //将json数据传递出去，setState会重新调用render()
-        //console.log(this.state.data);
-      })
-      .catch((e) => {
-        alert(e);
-      });
-  };*/
 
   fetchData() {
-    var url = 'http://192.168.1.101:3000/userOrder';
-    this.setState({loading: true});
+    var url = 'http://192.168.1.100:3000/userOrder';
     Axios.post(url ,{
-      username: this.state.username
+      username: this.state.username, 
     }).then((response) => {
-      console.log(this.state.username);
            this.setState({data: response.data}); //将json数
            console.log(this.state.data)
       });
     }
 
+  
+  deleteOrder = (item) =>{
+      var url = 'http://192.168.1.100:3000/deleteOrder';//ip地址在变化，要注意
+      Axios.post(url ,{
+        username: this.state.username, 
+        routeID: item.routeID,
+        //routeID: this.routeID,
+      })
+    }
 
   render() {
     return (
@@ -71,7 +65,7 @@ export default class MyOrderPage extends Component {
                   <Text styel={{color: '#fff', fontWeight: 'bold'}}>
                     {item.routeName}
                   </Text>
-                  <TouchableOpacity>
+                  <TouchableOpacity onPress = {this.deleteOrder(item)} >
                     <Text>删除订单</Text>
                   </TouchableOpacity>
               </View>
