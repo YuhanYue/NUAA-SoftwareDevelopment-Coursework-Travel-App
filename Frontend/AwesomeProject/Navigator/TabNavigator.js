@@ -58,7 +58,8 @@ SearchStack.navigationOptions = ({ navigation }) => {
 const HomeStack = createStackNavigator(
   {
     Home: Home,
-    Review: ReviewScreen
+    Review: ReviewScreen,
+    addReview: addReviewPage,
   }
 );
 
@@ -88,8 +89,8 @@ const ClassifyStack= createStackNavigator(
     Classify: ClassfiyScreen,
     Section: SectionScreen,
     Home: Home,
-    addReview: addReviewPage,
     Review: ReviewScreen,
+    addReview: addReviewPage,
   }
 );
 

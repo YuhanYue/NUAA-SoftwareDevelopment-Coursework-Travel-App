@@ -203,11 +203,13 @@ app.post("/getFavorite", function(req, res){
 app.post("/addReview", (req, res) => {
   const username = req.body.username;
   const review = req.body.review;
+  const routeID = req.body.routeID;
   //console.log(username);
   con.query(
-    "INSERT INTO `TravelApp`.`Review` ( `username`,`reviewContent`) VALUES (?, ?)",
-    [username, review],
+    "INSERT INTO `TravelApp`.`Review` ( `username`,`reviewContent`,`routeID`) VALUES (?, ?, ?)",
+    [username, review, routeID],
     (err, result) => {
+      console.log(routeID)
       console.log(err);
     }
   );

@@ -1,28 +1,43 @@
 //添加评论界面
 
 import Axios from "axios";
-import { Text } from "native-base";
+import { response } from "express";
 import React, {Component} from "react";
-import {View, TextInput, StyleSheet} from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import {View,Text, TextInput, StyleSheet, TouchableOpacity, AsyncStorage} from "react-native";
 
 
 export default class addReviewPage extends Component {
 
+  routeID = '';
+
+
   constructor(props) {
     super(props);
-    this.state = {
-      review :'',
-      username :'yuhan'
-    }
   }
   
+  async componentDidMount() {
+    try {//get username who logged in 
+      const username = await AsyncStorage.getItem('username');
+      this.setState({username: username})//取用户名
+      } catch (error) {
+       console.log(error); 
+      }
+     
+   }
+
+
+  state = {
+    review :'',
+    username :''
+  }
+
   onReviewChanged = (text) => {
     this.setState({review: text})
   };
 
+  /*
   addReview = () => {
-    var url = 'http://192.168.1.106:3000/addReview';
+    var url = 'http://192.168.1.100:3000/addReview';
     Axios.post(url, {
       review :this.state.review,
       username :this.state.username,
@@ -31,10 +46,27 @@ export default class addReviewPage extends Component {
       //console.log(this.state.review);
     });
     //ToastAndroid.show('添加评论成功!',ToastAndroid.SHORT);
-    this.props.navigation.pop();
+
+  }*/
+
+  addReview = () =>{
+    var url = 'http://192.168.1.100:3000/addReview';
+    Axios.post(url ,{
+      username: this.state.username, 
+      review: this.state.review,
+      routeID: routeID
+    }).then((response)=>{
+    });
   }
 
+  
+
   render(){
+    const {navigation} = this.props;
+    //const Review = navigation.getParam('Review');//接收数据
+    routeID = navigation.getParam('routeID');
+    console.log(routeID)
+
     return(
     <View>
       <TextInput 
@@ -48,8 +80,8 @@ export default class addReviewPage extends Component {
       >
         <Text>点击添加</Text>
       </TouchableOpacity>
+
       <TouchableOpacity style  = {styles.btnStyle}
-      onPress = {this.props.navigation.pop()}
       >
         <Text>取消</Text>
       </TouchableOpacity>

@@ -187,23 +187,26 @@ class SectionScreen extends React.Component {
                 </View>*/}
           </Content>
         </ScrollView>
-
         <View style={styles.canNot}>
           <TouchableOpacity style={styles.btnStyle}
           onPress = {this.Order}>
             <Text>立即预定</Text>
           </TouchableOpacity> 
          
-          <TouchableOpacity style={styles.btnStyle}
-            onPress = { () => { this.props.navigation.push("addReview")}}>
-            <Text>添加评论</Text>
-          </TouchableOpacity>
+         
          
           <TouchableOpacity style={styles.btnStyle}
             onPress = { () => { this.props.navigation.push("Review",{
               routeID:routeID
             })}}>
             <Text>查看评论</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.btnStyle}
+            onPress = { () => this.props.navigation.push("addReview",{
+              routeID: routeID
+            })}>
+            <Text>添加评论</Text>
           </TouchableOpacity>
         </View>
         
