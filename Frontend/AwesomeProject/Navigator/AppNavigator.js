@@ -46,6 +46,7 @@ import SectionScreen from '../scene/SectionScreen'
 import ClassifyScreen from "../scene/ClassifyScreen";
 import SignUpView from '../scene/SignUpView'
 import addReviewPage from "../scene/addReviewPage";
+import updatePasswd from '../scene/updatePasswd'
 //import HomeScene from '../scene/HomeScene'
 //import SectionScreen from ‘../scene/SectionScreen";
 //login->tabbar
@@ -55,6 +56,7 @@ const AppNavigator = createStackNavigator(
     //addReview: addReviewPage,
     //Login: LoginView,
     //SignUp: SignUpView,
+    //Update: updatePasswd,
     Tab:TabNavigator,
   },
   {

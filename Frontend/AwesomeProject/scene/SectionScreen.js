@@ -20,8 +20,8 @@ import {FlatList, ScrollView, ListView, TextInput} from 'react-native-gesture-ha
 const activeColor = "#F6BF1C";
 const inactiveColor = "#E6E8EB";
 var routeName = '';  
-var routeDuration = '';
-var routeIntro = '';
+var routeLength= '';
+var routeContent = '';
 
 
 class SectionScreen extends React.Component {
@@ -80,8 +80,8 @@ class SectionScreen extends React.Component {
         
         //console.log(routeID);
         routeName = json[routeID -1].routeName;
-        routeIntro = json[routeID -1].routeIntro;
-        routeDuration = json[routeID - 1].routeDuration;
+        routeContent = json[routeID -1].routeContent;
+        routeLength = json[routeID - 1].routeLength;
         //console.log(routeName)
       
       })
@@ -140,7 +140,7 @@ class SectionScreen extends React.Component {
     this.fetchData();
     const {navigation} = this.props;
     const section = navigation.getParam('section');
-    const routeInfo = navigation.getParam('routeInfo');
+    //const routeInfo = navigation.getParam('routeInfo');
     routeID = navigation.getParam('routeID');
     //console.log(routeName)
     //this.setState({routeID: routeID});
@@ -151,14 +151,14 @@ class SectionScreen extends React.Component {
       <Container>
         <StatusBar hidden />
         <Cover>
-          {/*<Image source={section.image} />*/}
+          <Image source={require('./image/test.jpeg')} />
           <Wrapper>
             {/*<Logo source={section.logo} />*/}
-            <Subtitle source={section.subtitle} />
+            <Subtitle source={routeName} />
           </Wrapper>
            
         <Title>{routeName}</Title>
-          <Caption>旅行天数：{routeDuration}</Caption>
+          <Caption>旅行天数：{routeLength}</Caption>
         </Cover>
         <TouchableOpacity style={{position: 'absolute', top: 20, right: 20}
         } onPress = {this.addFavorite}>
@@ -174,7 +174,7 @@ class SectionScreen extends React.Component {
         </TouchableOpacity>
         <ScrollView>
           <Content>
-      <Text>{routeIntro}</Text>
+      <Text>{routeContent}</Text>
            {/* <View>
               <FlatList
                 data={this.state.data}

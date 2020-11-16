@@ -26,10 +26,11 @@ export default class MyOrderPage extends Component {
       const username = await AsyncStorage.getItem('username');
       this.setState({username: username})//取用户名
       } catch (error) {
-       console.log(error); 
+       //console.log(error); 
       }
+
       this.fetchData();
-      console.log(this.state.data)
+      //console.log(this.state.data)
    }
 
    fetchData() {
@@ -38,6 +39,8 @@ export default class MyOrderPage extends Component {
       username: this.state.username, 
     }).then((response) => {
            this.setState({data: response.data}); //将json数
+           console.log('my favorite page')
+           console.log(this.state.data)
       });
     }
 

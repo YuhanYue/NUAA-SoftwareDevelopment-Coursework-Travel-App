@@ -57,9 +57,10 @@ export default class ReviewScreen extends Component {
           data={this.state.review}
           renderItem={({item}) => (
             <View style={{backgroundColor:'abc123', padding: 10, margin: 10}}>
-              <Text styel= {{ color:'#fff', fontWeight:'bold'}}>{item.reviewContent}</Text>
-              <Text styel= {{ color:'#fff', fontWeight:'bold'}}>{item.username}</Text>
-              <Text styel= {{ color:'#fff', fontWeight:'bold'}}>{item.date}</Text>
+              
+              <Text styel= {{ color:'#fff', fontWeight:'bold'}}>{item.content}</Text>
+              <Text styel= {{ color:'#fff', fontWeight:'bold'}}>用户：{item.username}</Text>
+             
             </View>
           )}
         />

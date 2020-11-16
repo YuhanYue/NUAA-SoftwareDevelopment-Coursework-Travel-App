@@ -50,8 +50,32 @@ app.post("/login", (req, res) => {
   
   //console.log(username);
   con.query(
-    "SELECT * FROM Users WHERE username = ? AND passwd = ?",
+    "SELECT * FROM customer WHERE username = ? AND userpassword = ?",
     [username, passwd],
+    (err, result) => {
+      if (err) {
+        res.send({ err: err });
+      }
+      if (result.length > 0) {
+        res.send(result);
+        console.log(result)
+        //console.log(username)
+      } else {
+        res.send({ message: "Wrong username/password conbination!" });
+      }
+    }
+  );
+});
+
+//update password
+app.post("/updatePasswd", (req, res) => {
+  const username = req.body.username;
+  const passwd = req.body.passwd;
+  
+  //console.log(username);
+  con.query(
+    "UPDATE `TravelApp`.`customer` SET `userpassword` = '?' WHERE (`username` = '?'); ",
+    [passwd, username],
     (err, result) => {
       if (err) {
         res.send({ err: err });
@@ -68,7 +92,7 @@ app.post("/login", (req, res) => {
 //get review for a route
 app.post("/review", function(req, res){
   const routeID = req.body.routeID;
-  con.query("SELECT * FROM Review where routeID = '?'",
+  con.query("SELECT * FROM discuss where routeID = '?'",
   [routeID],
   (err, result) =>{
     console.log(routeID)
@@ -79,7 +103,7 @@ app.post("/review", function(req, res){
       res.send(result);
       console.log(result)
     } else{
-      res.send({message: "No review for this route yet!"});
+      res.send({message: "No discuss for this route yet!"});
     }
   }
   );
@@ -89,7 +113,7 @@ app.post("/review", function(req, res){
 app.post("/userOrder", function(req, res){
   const username = req.body.username;
   //console.log(username)
-  con.query("SELECT * FROM `TravelApp`.`Order` WHERE username = ?",
+  con.query("SELECT * FROM `TravelApp`.`Orders` WHERE username = ?",
   [username],
   (err, result) =>{
     if(err){
@@ -111,11 +135,10 @@ app.post("/order", (req, res) => {
   const routeID = req.body.routeID;
   const routeName = req.body.routeName;
   con.query(
-    " INSERT INTO `TravelApp`.`Order` ( `username`, `routeID`,`routeName`) VALUES ( ?,?,?)",
+    " INSERT INTO `TravelApp`.`Orders` ( `username`, `routeID`,`routeName`) VALUES ( ?,?,?)",
     [username, routeID, routeName],
     (err, result) => {
       console.log(routeName)
-      console.log(err);
       //console.log(username);
       //console.log(routeID)
     }
@@ -128,11 +151,11 @@ app.post("/deleteOrder", (req, res) => {
   const username = req.body.username;
   const routeID = req.body.routeID;
   con.query(
-    " DELETE FROM `TravelApp`.`Order` WHERE (`routeID` = ?) AND (`username` = ?);",
+    " DELETE FROM `TravelApp`.`Orders` WHERE (`routeID` = ?) AND (`username` = ?);",
     [routeID, username],
     (err, result) => {
-      console.log(username);
-      console.log(routeID)
+      //console.log(username);
+      //console.log(routeID)
     }
   );
 });
@@ -143,10 +166,10 @@ app.post("/register", (req, res) => {
   const passwd = req.body.passwd;
   //console.log(username);
   con.query(
-    "INSERT INTO Users (username, passwd) VALUES (?,?)",
+    "INSERT INTO customer (username, userpassword) VALUES (?,?)",
     [username, passwd],
     (err, result) => {
-      console.log(err);
+      //console.log(err);
     }
   );
 });
@@ -160,7 +183,8 @@ app.post("/favorite", (req, res) => {
     [username,routeID],
     (err, result) => {
       console.log(err);
-      console.log(err);
+      console.log("favorite")
+      console.log(result)
     }
   );
 
@@ -169,11 +193,15 @@ app.post("/favorite", (req, res) => {
     const username = req.body.username;
     const routeID = req.body.routeID;
     //console.log(username);
+ 
     con.query(
-      "DELETE FROM Collection WHERE (`username` =?) AND (`routeID ` = ?)",
+      "DELETE FROM Collection WHERE (username =?) AND (routeID = ?)",
       [username,routeID],
+
       (err, result) => {
-        console.log(err);
+        //console.log(err);
+        console.log("cancel favorite");
+        console.log(routeID);
       }
     );
   });
@@ -190,7 +218,7 @@ app.post("/getFavorite", function(req, res){
     }
     if(result.length > 0){
       res.send(result);
-      console.log(result);
+      //console.log(result);
     } else{
       res.send({message: "No favorites for this user yet!"});
     }
@@ -206,11 +234,10 @@ app.post("/addReview", (req, res) => {
   const routeID = req.body.routeID;
   //console.log(username);
   con.query(
-    "INSERT INTO `TravelApp`.`Review` ( `username`,`reviewContent`,`routeID`) VALUES (?, ?, ?)",
+    "INSERT INTO `TravelApp`.`discuss` ( `username`,`content`,`routeID`) VALUES (?, ?, ?)",
     [username, review, routeID],
     (err, result) => {
-      console.log(routeID)
-      console.log(err);
+      //console.log(routeID)
     }
   );
 });
@@ -233,9 +260,10 @@ app.post("/userReview", (req, res) => {
 app.post("/userReview", function(req, res){
   const username = req.body.username;
   //console.log(username)
-  con.query("SELECT * FROM Review WHERE username = ?",
+  con.query("SELECT * FROM discuss WHERE username = ?",
   [username],
   (err, result) =>{
+    console.log(username)
     if(err){
       res.send({err: err});
     }
@@ -243,7 +271,7 @@ app.post("/userReview", function(req, res){
       res.send(result);
       console.log(result)
     } else{//只能res.send一次
-      res.send({message: "No reviews for this user yet!"});
+      res.send({message: "No discuss for this user yet!"});
     }
   }
   );
@@ -254,7 +282,7 @@ app.post("/deleteReview", (req, res) => {
   const username = req.body.username;
   const reviewID = req.body.reviewID;
   con.query(
-    " DELETE FROM `TravelApp`.`Review` WHERE (`reviewID` = ?) AND (`username` = ?);",
+    " DELETE FROM `TravelApp`.`discuss` WHERE (`reviewID` = ?) AND (`username` = ?);",
     [reviewID, username],
     (err, result) => {
     }

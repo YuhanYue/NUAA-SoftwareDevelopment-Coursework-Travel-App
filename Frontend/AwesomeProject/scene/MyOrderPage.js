@@ -21,8 +21,6 @@ export default class MyOrderPage extends Component {
   };
 
   async componentDidMount() {
-  
-  
     try {//get username who logged in 
       const username = await AsyncStorage.getItem('username');
       this.setState({username: username})//取用户名
@@ -65,7 +63,8 @@ export default class MyOrderPage extends Component {
                   <Text styel={{color: '#fff', fontWeight: 'bold'}}>
                     {item.routeName}
                   </Text>
-                  <TouchableOpacity onPress = {this.deleteOrder(item)} >
+                  {/*<TouchableOpacity onPress = {this.deleteOrder(item)} >*/}
+                  <TouchableOpacity>
                     <Text>删除订单</Text>
                   </TouchableOpacity>
               </View>

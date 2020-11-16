@@ -166,9 +166,9 @@ class ClassifyScreen extends React.Component {
                   }}>
                     <Card 
                 title={item.routeName}
-                //image={card.image}
-                caption={item.routeDuration}
-                subtitle={item.routeIntro}
+                image={require('./image/test.jpeg')}
+                caption={item.routeLength}
+                subtitle={item.routeContent}
               />
                   </TouchableOpacity>
              
@@ -270,13 +270,6 @@ const cards = [
     title: 'React Native',
     image: require('../image/test.jpeg'),
     subtitle: 'text',
-    caption: '1 to 12',
-    logo: require('../assets/logo-react.png'),
-  },
-  {
-    title: 'React Native',
-    image: require('../image/test.jpeg'),
-    subtitle: 'react-Native',
     caption: '1 to 12',
     logo: require('../assets/logo-react.png'),
   },

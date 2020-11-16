@@ -64,8 +64,7 @@ componentDidMount() {
     } else{
       alert('Username or Password is incorrect')
     }*/
-    //下面这段要
-    var url = 'http://192.168.1.106:3000/login';//ip地址在变化，要注意
+    var url = 'http://192.168.1.100:3000/login';
     Axios.post(url ,{
       username: this.username, 
       passwd: this.password,
@@ -76,7 +75,6 @@ componentDidMount() {
         this.storeUsername(this.username)
         //console.log(this.username)
         this.props.navigation.replace("Tab");
-        //.log(username);
         this.retrieveUsername();
         ToastAndroid.show('登录成功',ToastAndroid.SHORT);
       }
@@ -109,7 +107,7 @@ componentDidMount() {
 
   //忘记密码跳转
   ForgetPasswd = () =>{
-    this.props.navigation.push("")
+    this.props.navigation.push("Update")
   }
   
   render(){
@@ -146,7 +144,7 @@ componentDidMount() {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={this.ForgetPasswd}>
-                <Text style={{color: '#4398ff'}}>Help</Text>
+                <Text style={{color: '#4398ff'}}>Forget Password?</Text>
               </TouchableOpacity> 
             </View>
     </View>

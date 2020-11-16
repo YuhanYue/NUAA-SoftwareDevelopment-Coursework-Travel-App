@@ -1,7 +1,7 @@
 //添加评论界面
 
 import Axios from "axios";
-import { response } from "express";
+//import { response } from "express";
 import React, {Component} from "react";
 import {View,Text, TextInput, StyleSheet, TouchableOpacity, AsyncStorage} from "react-native";
 

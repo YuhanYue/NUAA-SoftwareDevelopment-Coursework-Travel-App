@@ -37,7 +37,7 @@ class Home extends React.Component {
   };
 
   fetchData(){
-    var url = 'http://192.168.1.101:3000/route';
+    var url = 'http://192.168.1.100:3000/route';
     fetch(url)
         .then((res)=> res.json())//转化为json
         .then((json)=>{

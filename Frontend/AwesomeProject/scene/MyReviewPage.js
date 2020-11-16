@@ -59,9 +59,10 @@ export default class MyFavoritePage extends Component {
             renderItem={({item}) => (
               <View>
                   <Text styel={{color: '#fff', fontWeight: 'bold'}}>
-                    {item.reviewContent}
+                    {item.content}
                   </Text>
-                  <TouchableOpacity onPress = {this.deleteReview(item)}>
+                  {/*<TouchableOpacity onPress = {this.deleteReview(item)}>*/}
+                  <TouchableOpacity>
                     <Text>删除评论</Text>
                   </TouchableOpacity>
               </View>
