@@ -11,7 +11,8 @@
 
 ## 运行
 ### APP
-frontend: `cd Frontend/AwesomeProject`, run `yarn android`
+frontend: `cd Frontend/AwesomeProject`, run `yarn android`  
+
 backend: `cd Backend`, run `nodemon Server.js`
 
 ### WEB
